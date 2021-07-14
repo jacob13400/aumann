@@ -14,3 +14,83 @@ a {
 * {
   box-sizing: border-box;
 }
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter-VariableFont_slnt,wght.ttf");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter-Black";
+  src: url("/fonts/Inter-Black-slnt=0.ttf");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter-ExtraBold";
+  src: url("/fonts/Inter-ExtraBold-slnt=0.ttf");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter-Bold";
+  src: url("/fonts/Inter-Bold-slnt=0.ttf");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter-SemiBold";
+  src: url("/fonts/Inter-SemiBold-slnt=0.ttf");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter-Medium";
+  src: url("/fonts/Inter-Medium-slnt=0.ttf");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter-Regular";
+  src: url("/fonts/Inter-Regular-slnt=0.ttf");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter-Light";
+  src: url("/fonts/Inter-Light-slnt=0.ttf");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter-ExtraLight";
+  src: url("/fonts/Inter-ExtraLight-slnt=0.ttf");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter-Thin";
+  src: url("/fonts/Inter-Thin-slnt=0.ttf");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
