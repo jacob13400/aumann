@@ -4,31 +4,17 @@ This is the Mysql version that has been updated.
 
 ## Getting Started
 
-Set up SQL:
+Set up Firebase:
 
 ```
-Navigate to ./lib and import the ./aumann.sql into your own system(Most simple way is to import file into phpMyadmin) 
+Set up config file and private key as instructed.
 ```
-
-```bash
-mysql -u root -p
-```
-
-```bash
-CREATE DATABASE new_database;
-```
-
-```bash
-#Exit the MySQL shell by pressing CTRL+D. 
-#From the normal command line, you can import the dump file with the following command:
-mysql -u username -p aumann < aumann.sql
-```
-
 Set up environments:
 
 ```bash
 #Navigate to .env.example in the root folder and rename to .env and follow instructions in the file
-cp .env.example .env
+cp .env.local.example .env.local
+Enter details into the new file as required
 ```
 
 Run the development server:
