@@ -7,6 +7,9 @@ import Form from 'react-bootstrap/Form';
 import styles from '../styles/Home.module.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import { getQuestionsSync } from './api/questions'
+import { getQuestionsAsync } from './api/questionsAsync'
+
 function InfoModal(props) {
   return (
     <Modal
@@ -168,6 +171,12 @@ export default function Home() {
   const [infoModalShow, setInfoModalShow] = React.useState(false);
   const [playModalShow, setPlayModalShow] = React.useState(false);
   
+  // useEffect(() => {    
+
+    
+      
+  // });
+
   return (
     <div className={styles.container}>
       <Head>
@@ -242,4 +251,25 @@ export default function Home() {
       </main>
     </div>
   )
+}
+
+export async function getStaticProps() {
+
+  // At this point it does not matter which one you choose,
+  // since the function will only be called once.
+  // 
+  // This async function will be useful if you copu paste the code in that
+  // file and put it in an async function and call it in useEffect
+
+  // The Async function will automatically update the values, so live score and chat can be used
+
+  var questions = await getQuestionsSync();
+
+  // var questionsAsync = await getQuestionsAsync();
+
+  console.log(questions);
+  // console.log(questionsAsync);
+  return {
+    props: {questions: questions}, // will be passed to the page component as props
+  }
 }

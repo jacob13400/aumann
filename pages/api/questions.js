@@ -1,6 +1,6 @@
 import admin from '../../lib/clientApp'
 
-export const getProfileData = async () => {
+export const getQuestionsSync = async () => {
   const db = admin.database()
   const questionsDB = db.ref('questions')
   
