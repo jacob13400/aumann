@@ -1,0 +1,48 @@
+.bottom {
+  flex: 1;
+
+  display: flex;
+  flex-direction: row;
+}
+
+.left {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 25px;
+  padding-left: 25px;
+}
+
+.bottomHead {
+  color: #606060;
+  font-family: Inter-Medium;
+  font-size: 14px;
+  cursor: default;
+}
+
+.names {
+  font-family: Inter-Medium;
+  font-size: 18px;
+}
+
+.right {
+  flex: 1;
+
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 25px;
+  padding-right: 25px;
+}
+
+@media only screen and (max-width: 600px) {
+  .bottomHead {
+    font-size: 2.9vw;
+  }
+  .names {
+    font-size: 3.9vw;
+  }
+}
