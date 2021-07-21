@@ -10,7 +10,7 @@ import PlayModal from '../component/Modals/PlayModal';
 import Credits from '../component/Credits';
 
 import { getQuestionsSync } from './api/questions';
-import { getQuestionsAsync } from './api/questionsAsync';
+// import { getQuestionsAsync } from './api/questionsAsync';
 
 export default function Home() {
   const [infoModalShow, setInfoModalShow] = React.useState(false);
