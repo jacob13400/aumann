@@ -1,0 +1,103 @@
+.top {
+  height: 69px;
+  display: flex;
+}
+
+.logo {
+  display: flex;
+
+  background-image: url('../../public/icons/logo.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+
+  height: 50px;
+  width: 50px;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+.logo:hover {
+  opacity: 0.8;
+}
+
+.logoLink {
+  width: 50px;
+}
+
+.roundMobile {
+  display: none;
+  flex: 1;
+  align-self: center;
+
+  justify-content: center;
+  text-align: center;
+
+  font-size: 36px;
+  font-family: "Inter-SemiBold";
+  color: #FFFFFF;
+}
+
+.timerMobile {
+  display: none;
+  flex: 1;
+  text-align: right;
+  align-self: center;
+  margin-right: 4%;
+
+  font-size: 36px;
+  font-family: Inter-Medium;
+  color: #FFFFFF;
+}
+
+.padTopRound {
+  height: 13.82px;
+}
+
+.round {
+  height: 69px;
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  text-align: center;
+
+  font-size: 36px;
+  font-family: "Inter-SemiBold";
+  color: #FFFFFF;
+}
+
+@media only screen and (max-width: 850px) {
+  .logo {
+    flex: 1;
+  }
+  .round {
+    display: none;
+  }
+  .padTopRound {
+
+  }
+  .roundMobile {
+    display: block;
+  }
+  .timerMobile {
+    display: block;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .roundMobile {
+    font-size: 28px;
+  }
+  .timerMobile {
+    font-size: 24px;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .roundMobile {
+    font-size: 24px;
+  }
+  .timerMobile {
+    font-size: 20px;
+  }
+}

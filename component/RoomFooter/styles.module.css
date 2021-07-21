@@ -1,0 +1,27 @@
+.bottom {
+  height: 138px;
+  display: flex;
+}
+
+.timer {
+  flex: 1;
+  text-align: right;
+  margin-right: 4%;
+  margin-top: 40px;
+
+  font-size: 36px;
+  font-family: Inter-Medium;
+  color: #FFFFFF;
+}
+
+@media only screen and (max-width: 1200px) {
+  .timer {
+    margin-top: 20px;
+  }
+}
+
+@media only screen and (max-width: 850px) {
+  .bottom {
+    display: none;
+  }
+}
