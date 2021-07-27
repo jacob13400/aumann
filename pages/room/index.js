@@ -10,10 +10,41 @@ import Chat from '../../component/Chat';
 import RoomFooter from '../../component/RoomFooter';
 import { getUsers } from '../api/users';
 
+
 export default function Room() {
   const username = "jozdien";
-  const [userList, setUserList] = React.useState([{ id: 0, username: 'jozdien', roomID: 0, points: 0 }, { id: 1, username: 'zeref', roomID: 0, points: 0 },
-                                                  { id: 2, username: 'su', roomID: 0, points: 0 }, { id: 3, username: 'whybevicky', roomID: 0, points: 0 }]);
+  const [userList, setUserList] = React.useState([{ id: 0, username: 'jozdien', roomID: 0, points: 0, estimate: "75", lock: false, color: "#0FFFFF" },
+                                                  { id: 1, username: 'zeref', roomID: 0, points: 0, estimate: "50", lock: true, color: "#F0C9A8" }]);
+  const [minutes, setMinutes] = useState(5);
+  const [seconds, setSeconds] = useState(0);
+
+  // TODO: Get starting time from server before countdown so that local times are synchronized
+
+  // Function for countdown timer
+  useEffect(()=>{
+    let myInterval = setInterval(() => {
+      if (seconds > 0) {
+        setSeconds(seconds - 1);
+      }
+      if (seconds === 0) {
+        if (minutes === 0) {
+          clearInterval(myInterval);
+        } 
+        else {
+          setMinutes(minutes - 1);
+          setSeconds(59);
+        }
+      } 
+    }, 1000)
+      return ()=> {
+          clearInterval(myInterval);
+        };
+  });
+
+  // Hacky solution, but passing state variables to components triggers infinite re-render errors.  This bypasses that.
+  const minutesProp = minutes;
+  const secondsProp = seconds;
+
 
   // const getUserList = async () => {
 
@@ -55,18 +86,19 @@ export default function Room() {
       </Head>
 
       <main className={styles.main}>
-        <RoomHead userList={userList} username={username}/>
+        <RoomHead userList={userList} username={username} minutes={minutesProp} seconds={secondsProp}/>
         <div className={styles.body}>
           <UserList userList={userList} username={username}/>
-          <Game/>
+          <Game userList={userList} username={username} minutes={minutesProp} seconds={secondsProp}/>
           <Chat/>
         </div>
         <div className={styles.padBodyBottom}/>
-        <RoomFooter/>
+        <RoomFooter minutes={minutesProp} seconds={secondsProp}/>
       </main>
     </div>
   )
 }
+
 
 export async function getStaticProps() {
 

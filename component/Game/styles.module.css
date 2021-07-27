@@ -126,6 +126,9 @@
   font-size: 14px;
   font-family: Inter-Medium;
   color: #FFFFFF;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
 }
 
 .otherName {

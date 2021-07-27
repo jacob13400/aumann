@@ -15,7 +15,7 @@ export default function UserList(props) {
                   #{index + 1}
                 </div>
                 <div className={styles.playerDetails}>
-                  <div className={styles.playerName}>
+                  <div style={{color: player.color}}>
                     {player.username}
                     {player.username == props.username ? " (You)" : null}
                   </div>
