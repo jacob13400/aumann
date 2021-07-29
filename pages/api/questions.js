@@ -10,14 +10,6 @@ export const getQuestionsSync = async () => {
     if (doc && doc.exists)
       return doc.data;
   });
-
-  // const docRef = db.collection('questions');
-
-  // await docRef.add({
-  //   first: 'Ada',
-  //   last: 'Lovelace',
-  //   born: 1815
-  // });
-
+  
   return null;
 }

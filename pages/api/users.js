@@ -5,19 +5,10 @@ export const getUsers = async (roomID) => {
   const queryCollection = db.collection('users');
   const snapshot = await queryCollection.where('roomID', '==', roomID).get();
   
+  var result = null;
   snapshot.forEach((doc) => {
-    console.log(doc.id, '=>', doc.data());
+    console.log('Data received: ', doc.exists);
+    result = doc.data();
   });
-  // questionsDB.get().then((snapshot) => {
-  //   if (snapshot.exists()) {
-  //     console.log(snapshot.val());
-  //     return snapshot.val();
-  //   } else {
-  //     console.log("No data available");
-  //   }
-  // }).catch((error) => {
-  //   console.error(error);
-  // });
-
-  return null;
+  return result;
 }

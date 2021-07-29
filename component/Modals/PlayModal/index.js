@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form';
 import styles from './styles.module.css';
 
 import Button from '../../Button';
+import { getRoom } from '../../../pages/api/room';
 
 export default function PlayModal(props) { 
   const [formState, setFormState] = React.useState({
@@ -12,23 +13,26 @@ export default function PlayModal(props) {
   });
 
 
-  const onEnter = () => {
+  const onEnter = async () => {
     localStorage.setItem("username", formState.username);
     localStorage.setItem("roomID", formState.roomID);
 
-    fetch("http://localhost:3000/api/room", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify(formState),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        Router.push({pathname: "/room", roomID: formState.roomID});
-      })
-      .catch(console.log);
+    console.log("Sent: ", formState)
+    var room = await getRoom(formState);
+
+    // fetch("http://localhost:3000/api/room", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Accept: "application/json",
+    //   },
+    //   body: JSON.stringify(formState),
+    // })
+    //   .then((res) => res.json())
+    //   .then((res) => {
+    //     Router.push({pathname: "/room", roomID: formState.roomID});
+    //   })
+    //   .catch(console.log);
 
   }
 

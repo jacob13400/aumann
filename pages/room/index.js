@@ -103,7 +103,7 @@ export default function Room() {
 export async function getStaticProps(roomID) {
 
   var users = await getUsers('');
-  console.log(users);
+  // console.log("Check", users);
 
   return {
     props: {users: users}, // will be passed to the page component as props
