@@ -1,19 +1,23 @@
 import admin from '../../lib/clientApp'
 
-export const getUsers = async () => {
-  const db = admin.database()
-  const questionsDB = db.ref('users')
+export const getUsers = async (roomID) => {
+  const db = admin.firestore()
+  const queryCollection = db.collection('users');
+  const snapshot = await queryCollection.where('roomID', '==', roomID).get();
   
-  questionsDB.get().then((snapshot) => {
-    if (snapshot.exists()) {
-      console.log(snapshot.val());
-      return snapshot.val();
-    } else {
-      console.log("No data available");
-    }
-  }).catch((error) => {
-    console.error(error);
+  snapshot.forEach((doc) => {
+    console.log(doc.id, '=>', doc.data());
   });
+  // questionsDB.get().then((snapshot) => {
+  //   if (snapshot.exists()) {
+  //     console.log(snapshot.val());
+  //     return snapshot.val();
+  //   } else {
+  //     console.log("No data available");
+  //   }
+  // }).catch((error) => {
+  //   console.error(error);
+  // });
 
   return null;
 }

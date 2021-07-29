@@ -1,19 +1,23 @@
 import admin from '../../lib/clientApp'
 
 export const getQuestionsSync = async () => {
-  const db = admin.database()
-  const questionsDB = db.ref('questions')
-  
-  questionsDB.get().then((snapshot) => {
-    if (snapshot.exists()) {
-      console.log(snapshot.val());
-      return snapshot.val();
-    } else {
-      console.log("No data available");
-    }
-  }).catch((error) => {
-    console.error(error);
+  const db = admin.firestore()
+  const snapshot = await db.collection('questons').get();
+
+  snapshot.forEach((doc) => {
+    console.log(doc.id, '=>', doc.data());
+
+    if (doc && doc.exists)
+      return doc.data;
   });
+
+  // const docRef = db.collection('questions');
+
+  // await docRef.add({
+  //   first: 'Ada',
+  //   last: 'Lovelace',
+  //   born: 1815
+  // });
 
   return null;
 }

@@ -26,7 +26,7 @@ export default function PlayModal(props) {
     })
       .then((res) => res.json())
       .then((res) => {
-        Router.push("/room");
+        Router.push({pathname: "/room", roomID: formState.roomID});
       })
       .catch(console.log);
 
