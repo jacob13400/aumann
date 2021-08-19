@@ -1,6 +1,5 @@
 import React from 'react';
 import Head from 'next/head'
-import Router from 'next/router';
 import styles from '../styles/Home.module.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 

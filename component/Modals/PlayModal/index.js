@@ -1,6 +1,7 @@
 import React from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
+import Router from 'next/router';
 import styles from './styles.module.css';
 
 import Button from '../../Button';
@@ -23,7 +24,7 @@ export default function PlayModal(props) {
 
     const user = await getUser(formState);
     const room = await getRoom(formState);
-
+    Router.push({pathname: "/room", roomID: formState.roomID});
   }
 
   return (
