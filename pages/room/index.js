@@ -15,9 +15,11 @@ import { getRoom } from '../api/room';
 export default function Room(props) {
   const username = props.player;
   const roomID = props.roomID;
+
   const [userList, setUserList] = React.useState([{ id: 0, username: 'jozdien', roomID: 0, points: 0, estimate: "75", lock: false, color: "#0FFFFF" },
                                                   { id: 1, username: 'zeref', roomID: 0, points: 0, estimate: "50", lock: true, color: "#F0C9A8" }]);
   const [room, setRoom] = useState(0);
+  const [interval, setInterval] = useState(2000);
   
   const [minutes, setMinutes] = useState(5);
   const [seconds, setSeconds] = useState(0);
@@ -25,13 +27,13 @@ export default function Room(props) {
   const getUsersList = async () => {
     var users = await getUsers(props.roomID)
 
-    setTimeout(function(){setUserList(users);console.log('User', users);}, 30000);
+    setTimeout(function(){setUserList(users); setInterval(10000); console.log('User', users);}, interval);
   };
 
   const getRoomDetails = async () => {
     var room = await getRoom(props.roomID)
     
-    setTimeout(function(){setRoom(room);console.log('Room', room);}, 30000);
+    setTimeout(function(){setRoom(room);console.log('Room', room);}, interval);
   };
 
   //Props has the value for the room ID
