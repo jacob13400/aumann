@@ -9,75 +9,50 @@ import Game from '../../component/Game';
 import Chat from '../../component/Chat';
 import RoomFooter from '../../component/RoomFooter';
 import { getUsers } from '../api/users';
+import { getRoom } from '../api/room';
 
 
-export default function Room() {
-  const username = "jozdien";
+export default function Room(props) {
+  const username = props.player;
   const [userList, setUserList] = React.useState([{ id: 0, username: 'jozdien', roomID: 0, points: 0, estimate: "75", lock: false, color: "#0FFFFF" },
                                                   { id: 1, username: 'zeref', roomID: 0, points: 0, estimate: "50", lock: true, color: "#F0C9A8" }]);
+  const [room, setRoom] = useState(0);
+  
   const [minutes, setMinutes] = useState(5);
   const [seconds, setSeconds] = useState(0);
+
+  const getUsersList = async () => {
+    var users = await getUsers(props.roomID)
+
+    setTimeout(function(){setUserList(users);console.log('User', users);}, 3000);
+  };
+
+  const getRoomDetails = async () => {
+    var room = await getRoom(props.roomID)
+    
+    setTimeout(function(){setRoom(room);console.log('Room', room);}, 3000);
+  };
+
+  //Props has the value for the room ID
+  console.log("Value: ", userList)  
 
   // TODO: Get starting time from server before countdown so that local times are synchronized
 
   // Function for countdown timer
   useEffect(()=>{
-    let myInterval = setInterval(() => {
-      if (seconds > 0) {
-        setSeconds(seconds - 1);
-      }
-      if (seconds === 0) {
-        if (minutes === 0) {
-          clearInterval(myInterval);
-        } 
-        else {
-          setMinutes(minutes - 1);
-          setSeconds(59);
-        }
-      } 
-    }, 1000)
-      return ()=> {
-          clearInterval(myInterval);
-        };
+    getUsersList();
+    getRoomDetails();
+
+    // Place flag here to check for the first time data is retrieved
+    // Put a buffer page while flag is flase. Use same page for after 
+    // entering data in main page too
+
   });
 
   // Hacky solution, but passing state variables to components triggers infinite re-render errors.  This bypasses that.
   const minutesProp = minutes;
   const secondsProp = seconds;
-
-
-  // const getUserList = async () => {
-
-  //   const room = localStorage.getItem("roomID");
-  //   try{
-  //       const res = await fetch("http://localhost:3000/api/user", {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Accept: "application/json",
-  //         },
-  //         body: JSON.stringify({room}),
-  //       })
-  //       const data = await res.json();
-        
-  //       setTimeout(function(){ 
-  //         console.log("Timeout for function refresh!");
-  //         setUserList(data.result); 
-  //         console.log(userList);
-  //       }, 500);
-        
-  //       }
-  //       catch (error) {
-  //         console.log(error)
-  //       }
-  //   }
-
   
-  // useEffect(() => {
-  //     getUserList();
-  //   })
-  
-
   return (
     <div className={styles.container}>
       <Head>
@@ -99,13 +74,6 @@ export default function Room() {
   )
 }
 
-
-export async function getStaticProps(roomID) {
-
-  var users = await getUsers('');
-  // console.log("Check", users);
-
-  return {
-    props: {users: users}, // will be passed to the page component as props
-  }
+Room.getInitialProps = async (ctx) => {
+  return ctx.query;
 }

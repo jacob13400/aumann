@@ -1,8 +1,8 @@
 import admin from '../../lib/clientApp'
 
-export const getUsers = async (roomID) => {
+export const getRoom = async (roomID) => {
   const db = admin.firestore()
-  const queryCollection = db.collection('users');
+  const queryCollection = db.collection('rooms');
   const snapshot = await queryCollection.where('roomID', '==', roomID).get();
   
   var result = [];

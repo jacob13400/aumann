@@ -1,7 +1,7 @@
 import React from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-import Router from 'next/router';
+import {useRouter} from 'next/router';
 import styles from './styles.module.css';
 
 import Button from '../../Button';
@@ -15,6 +15,7 @@ export default function PlayModal(props) {
     username: "",
   });
 
+  const Router = useRouter();
 
   const onEnter = async () => {
     localStorage.setItem("username", formState.username);
@@ -23,8 +24,10 @@ export default function PlayModal(props) {
     console.log("Sent: ", formState);
 
     const user = await getUser(formState);
-    const room = await getRoom(formState);
-    Router.push({pathname: "/room", roomID: formState.roomID});
+
+    if(!user) var room = await getRoom(formState);
+
+    Router.push({pathname: "/room", query: {roomID: formState.roomID, player: formState.username}});
   }
 
   return (
