@@ -6,6 +6,7 @@ import Button from '../../component/Button';
 import LockModal from '../../component/Modals/LockModal';
 import AlertEmptyModal from '../../component/Modals/AlertEmptyModal';
 import AlertLimitModal from '../../component/Modals/AlertLimitModal';
+import { updateUserEstimate } from '../../lib/userEstimate';
 
 
 // Function to handle changing of value in the estimate input field - some values aren't allowed, like characters, etc.
@@ -63,6 +64,13 @@ export default function Game(props) {
     setFlag(false);
   }
 
+  const updateEstimate = async (estimate) => {
+    const query = {username: props.username, roomID: props.roomID, estimate: estimate};
+    const updateReturn = await updateUserEstimate(query);
+
+    console.log("User Updated: ", updateReturn);
+  };
+
 
   return (
     <div className={styles.centre}>
@@ -93,7 +101,7 @@ export default function Game(props) {
             </Form>
           </div>
           <div className={styles.lockBox}>
-            <Button type={"lock"} text={"Lock"} action={() => setLockModalShow(true)}></Button>
+            <Button type={"lock"} text={"Lock"} action={() => {updateEstimate(estimateValue); setLockModalShow(true);}}></Button>
           </div>
         </div>
       </div>
@@ -116,7 +124,7 @@ export default function Game(props) {
                 :
                   <div className={styles.otherBoxInactive}>
                     <div className={styles.otherEstimate}>
-                      {player.estimate * 100}%
+                      {player.estimate}%
                     </div>
                     <div className={styles.otherName}>
                       {player.username}
