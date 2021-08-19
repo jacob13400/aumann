@@ -4,7 +4,9 @@ import Form from 'react-bootstrap/Form';
 import styles from './styles.module.css';
 
 import Button from '../../Button';
-import { getRoom } from '../../../pages/api/room';
+import { getRoom } from '../../../lib/room';
+import { getUser } from '../../../lib/userCreate';
+import { getUserRandom, checkUser } from '../../../lib/anonymousUser';
 
 export default function PlayModal(props) { 
   const [formState, setFormState] = React.useState({
@@ -17,22 +19,10 @@ export default function PlayModal(props) {
     localStorage.setItem("username", formState.username);
     localStorage.setItem("roomID", formState.roomID);
 
-    console.log("Sent: ", formState)
-    var room = await getRoom(formState);
+    console.log("Sent: ", formState);
 
-    // fetch("http://localhost:3000/api/room", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Accept: "application/json",
-    //   },
-    //   body: JSON.stringify(formState),
-    // })
-    //   .then((res) => res.json())
-    //   .then((res) => {
-    //     Router.push({pathname: "/room", roomID: formState.roomID});
-    //   })
-    //   .catch(console.log);
+    const user = await getUser(formState);
+    const room = await getRoom(formState);
 
   }
 

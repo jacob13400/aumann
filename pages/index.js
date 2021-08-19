@@ -9,7 +9,7 @@ import InfoModal from '../component/Modals/InfoModal';
 import PlayModal from '../component/Modals/PlayModal';
 import Credits from '../component/Credits';
 
-import { getQuestionsSync } from './api/questions';
+import { getQuestionsSync } from '../lib/questions';
 // import { getQuestionsAsync } from './api/questionsAsync';
 
 export default function Home() {
