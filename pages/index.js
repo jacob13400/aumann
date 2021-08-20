@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -8,16 +8,29 @@ import InfoModal from '../component/Modals/InfoModal';
 import PlayModal from '../component/Modals/PlayModal';
 import Credits from '../component/Credits';
 
-import { getQuestionsSync } from '../lib/questions';
+import { getQuestionsSync } from '../lib/questions.js';
+import questions from '../lib/questions.json'
 // import { getQuestionsAsync } from './api/questionsAsync';
 
 export default function Home(props) {
   const [infoModalShow, setInfoModalShow] = React.useState(false);
   const [playModalShow, setPlayModalShow] = React.useState(false);
-  
+
+  // console.log(questions);
+
+  var no_of_qns = Object.keys(questions['questions']).length;
+
+  var item = questions['questions'][Math.floor(Math.random() * no_of_qns)];
+
+  console.log("Question: ", item["question"]);
+
+  // The string stored in key "1" in every JSON item is always the correct answer.
+  console.log("Correct Answer: ", item["1"]);
+
   /*
 
   useEffect(() => {
+    
   });
 
   */

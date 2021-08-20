@@ -21,7 +21,7 @@ export default function LockModal(props) {
         Are you sure you want to lock your choice?  You won't be able to change it again this round.
       </Modal.Body>
       <Modal.Footer>
-        <Button type={"modal"} text={"Yes"} action={props.onHide}></Button>
+        <Button type={"modal"} text={"Yes"} action={props.onConf}></Button>
       </Modal.Footer>
     </Modal>
   );

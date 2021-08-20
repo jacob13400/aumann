@@ -51,23 +51,13 @@ export default function Game(props) {
   const [alertLimitModalShow, setAlertLimitModalShow] = React.useState(false);
 
   // Storing value entered in estimate input field
-  const [estimateValue, setEstimateValue] = React.useState("25");
+  const [estimateValue, setEstimateValue] = React.useState("");
 
   // Whether estimate input field is accepting input
   const [lock, setLock] = React.useState(false);
 
   // Whether timer is still running - necessary to prevent infinite triggers of the setLock(true) call below
   const [flag, setFlag] = React.useState(true);
-
-
-  // If timer has reached zero, lock the input field
-  if(props.minutes == 0 && props.seconds == 0 && flag) {
-    setLock(true);
-    setFlag(false);
-
-    // Calculating the user's score
-    updatePoints();
-  }
 
   const updatePoints = async () => {
     const query = {answer: false, estimate: estimateValue};
@@ -85,6 +75,15 @@ export default function Game(props) {
     const points = await updateUserPoints({points: updateReturn});
     console.log("User Updated - at Server: ", points);
   };
+
+  // If timer has reached zero, lock the input field
+  if(props.minutes == 0 && props.seconds == 0 && flag) {
+    //setLock(true);
+    setFlag(false);
+
+    // Calculating the user's score
+    updatePoints();
+  }
 
 
   return (
@@ -154,7 +153,8 @@ export default function Game(props) {
 
       <LockModal
         show={lockModalShow}
-        onHide={() => handleLock(estimateValue, setLockModalShow, setLock, setAlertEmptyModalShow, setAlertLimitModalShow)}
+        onHide={() => setLockModalShow(false)}
+        onConf={() => handleLock(estimateValue, setLockModalShow, setLock, setAlertEmptyModalShow, setAlertLimitModalShow)}
       />
       <AlertEmptyModal
         show={alertEmptyModalShow}

@@ -20,10 +20,7 @@ export default function Room(props) {
                                                   { id: 1, username: 'zeref', roomID: 0, points: 0, estimate: "50", lock: true, color: "#F0C9A8" }]);
   const [room, setRoom] = useState({"questionID": "0","updatedAt": {"seconds": 1629388503,"nanoseconds": 722000000},"users": [{"username": "verd"}],
                                     "createdAt": {"seconds": 1629355142,"nanoseconds": 838000000},"id": "werds"});
-  const [interval, setInterval] = useState(3000);
-  
-  // const [minutes, setMinutes] = useState(5);
-  // const [seconds, setSeconds] = useState(0);
+  const [elapsedTime, setElapsedTime] = useState(0);
 
   const getUsersList = async () => {
     var users = await getUsers(props.roomID)
@@ -32,23 +29,36 @@ export default function Room(props) {
   };
 
   const getRoomDetails = async () => {
-    var room = await getRoom(props.roomID)
-    const intervalTemp = room.createdAt.seconds*1000+(room.createdAt.nanoseconds*(10**-6));
+    var room = await getRoom(props.roomID);
     
     setTimeout(function(){
       setRoom(room);
-      setInterval(intervalTemp);
       console.log('Room', room);
     }, 3000);
   };
-  
-  
-  // TODO: Get starting time from server before countdown so that local times are synchronized
   
   // Function for countdown timer
   useEffect(()=>{
     getUsersList();
     getRoomDetails();
+
+    const intervalTemp = room.createdAt.seconds*1000+(room.createdAt.nanoseconds*(10**-6));
+
+    const currentTime = new Date();
+    const createdTime = new Date(intervalTemp);
+    console.log("Current time: ", currentTime);
+    console.log("Created time: ", createdTime);
+
+    var elapsedTimeSeconds = Math.abs(currentTime - createdTime) / 1000;
+    console.log("elapsedTimeSeconds: ", elapsedTimeSeconds);
+
+    let myInterval = setInterval(() => {
+      elapsedTimeSeconds = elapsedTimeSeconds + 1
+      setElapsedTime(elapsedTimeSeconds);
+    }, 1000)
+      return ()=> {
+          clearInterval(myInterval);
+        };
     
     // Place flag here to check for the first time data is retrieved
     // Put a buffer page while flag is flase. Use same page for after 
@@ -58,14 +68,11 @@ export default function Room(props) {
   }, []);
   
   //Props has the value for the room ID
-  console.log('Interval: ', interval);
-  console.log("Value: ", userList)  
+  console.log("Value: ", userList);
   
   // Hacky solution, but passing state variables to components triggers infinite re-render errors.  This bypasses that.
-  const minutesProp = 5;
-  const secondsProp = 0;
-  console.log('Time: ', new Date());
-  console.log('Time: ', new Date(interval));
+  const minutesProp = (45 - Math.floor(elapsedTime / 60)) >= 0 ? (45 - Math.floor(elapsedTime / 60)) : 0;
+  const secondsProp = (45 - Math.floor(elapsedTime / 60)) >= 0 ? Math.floor(60 - elapsedTime % 60) : 0;
   
   return (
     <div className={styles.container}>
