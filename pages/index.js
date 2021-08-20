@@ -11,7 +11,7 @@ import Credits from '../component/Credits';
 import { getQuestionsSync } from '../lib/questions';
 // import { getQuestionsAsync } from './api/questionsAsync';
 
-export default function Home() {
+export default function Home(props) {
   const [infoModalShow, setInfoModalShow] = React.useState(false);
   const [playModalShow, setPlayModalShow] = React.useState(false);
   
