@@ -7,6 +7,8 @@ import LockModal from '../../component/Modals/LockModal';
 import AlertEmptyModal from '../../component/Modals/AlertEmptyModal';
 import AlertLimitModal from '../../component/Modals/AlertLimitModal';
 import { updateUserEstimate } from '../../lib/userEstimate';
+import { updateUserPoints } from '../../lib/userPoints';
+import { getScore } from '../../pages/api/calculateScore';
 
 
 // Function to handle changing of value in the estimate input field - some values aren't allowed, like characters, etc.
@@ -62,13 +64,26 @@ export default function Game(props) {
   if(props.minutes == 0 && props.seconds == 0 && flag) {
     setLock(true);
     setFlag(false);
+
+    // Calculating the user's score
+    updatePoints();
   }
+
+  const updatePoints = async () => {
+    const query = {answer: false, estimate: estimateValue};
+    const updateReturn = await getScore(query);
+
+    console.log("User Updated: ", updateReturn);
+  };
 
   const updateEstimate = async (estimate) => {
     const query = {username: props.username, roomID: props.roomID, estimate: estimate};
     const updateReturn = await updateUserEstimate(query);
 
     console.log("User Updated: ", updateReturn);
+
+    const points = await updateUserPoints({points: updateReturn});
+    console.log("User Updated - at Server: ", points);
   };
 
 
