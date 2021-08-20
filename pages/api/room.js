@@ -3,12 +3,12 @@ import admin from '../../lib/clientApp'
 export const getRoom = async (roomID) => {
   const db = admin.firestore()
   const queryCollection = db.collection('rooms');
-  const snapshot = await queryCollection.where('roomID', '==', roomID).get();
+  const snapshot = await queryCollection.where('id', '==', roomID).get();
   
-  var result = [];
+  var result = null;
   snapshot.forEach((doc) => {
     console.log('Data received: ', doc.data());
-    result.push(doc.data());
+    result = doc.data();
   });
   return result;
 }
