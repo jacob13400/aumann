@@ -61,7 +61,7 @@ export default function Game(props) {
 
 
   // If timer has reached zero, lock the input field
-  if(props.minutes == 0 && props.seconds == 0 && flag) {
+  if(props.minutes <= 0 && props.seconds == 0 && flag) {
     setLock(true);
     setFlag(false);
 
@@ -70,10 +70,8 @@ export default function Game(props) {
   }
 
   const updatePoints = async () => {
-    const query = {answer: false, estimate: estimateValue};
-    const updateReturn = await getScore(query);
-
-    console.log("User Updated: ", updateReturn);
+    const points = await updateUserPoints({estimate: estimateValue});
+    console.log("User Updated - at Server: ", points);
   };
 
   const updateEstimate = async (estimate) => {
@@ -82,8 +80,8 @@ export default function Game(props) {
 
     console.log("User Updated: ", updateReturn);
 
-    const points = await updateUserPoints(query);
-    console.log("User Updated - at Server: ", points);
+    // const points = await updateUserPoints(query);
+    // console.log("User Updated - at Server: ", points);
   };
 
 

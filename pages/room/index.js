@@ -60,12 +60,17 @@ export default function Room(props) {
   //Props has the value for the room ID
   console.log('Interval: ', interval);
   console.log("Value: ", userList)  
+  // console.log('Time: ', new Date());
+  // console.log('Time: ', new Date(interval));
+  
+  var time1 = new Date();
+  var time2 = new Date(interval);
+  var differenceInTime = time1 - time2;
   
   // Hacky solution, but passing state variables to components triggers infinite re-render errors.  This bypasses that.
-  const minutesProp = 5;
-  const secondsProp = 0;
-  console.log('Time: ', new Date());
-  console.log('Time: ', new Date(interval));
+  const minutesProp = 5 - Math.floor(differenceInTime / 1000 / 60);
+  differenceInTime -= Math.floor(differenceInTime / 1000 / 60) * 1000 * 60;
+  const secondsProp = Math.floor(differenceInTime / 1000);
   
   return (
     <div className={styles.container}>
