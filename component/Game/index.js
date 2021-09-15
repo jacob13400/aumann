@@ -82,7 +82,7 @@ export default function Game(props) {
 
     console.log("User Updated: ", updateReturn);
 
-    const points = await updateUserPoints({points: updateReturn});
+    const points = await updateUserPoints(query);
     console.log("User Updated - at Server: ", points);
   };
 
