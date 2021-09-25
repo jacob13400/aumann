@@ -8,12 +8,13 @@ import UserList from '../../component/UserList';
 import Game from '../../component/Game';
 import Chat from '../../component/Chat';
 import RoomFooter from '../../component/RoomFooter';
+import { getQuestionsSync } from '../../lib/questions';
 import { getUsers } from '../api/users';
 import { getRoom } from '../api/room';
 
 
 export default function Room(props) {
-  const username = props.player;
+  const username = props.username;
   const roomID = props.roomID;
 
   const [userList, setUserList] = React.useState([{ id: 0, username: 'jozdien', roomID: 0, points: 0, estimate: "75", lock: false, color: "#0FFFFF" },
@@ -24,6 +25,14 @@ export default function Room(props) {
   
   // const [minutes, setMinutes] = useState(5);
   // const [seconds, setSeconds] = useState(0);
+
+  const getQuestions = async () => {
+    var questions = await getQuestionsSync();
+
+    console.log(questions);
+
+    setTimeout(function(){console.log("Questions: ", questions);}, 3000);
+  };
 
   const getUsersList = async () => {
     var users = await getUsers(props.roomID)
@@ -49,28 +58,24 @@ export default function Room(props) {
   useEffect(()=>{
     getUsersList();
     getRoomDetails();
-    
-    // Place flag here to check for the first time data is retrieved
-    // Put a buffer page while flag is flase. Use same page for after 
-    // entering data in main page too
-    
+    getQuestions();
     
   }, []);
   
   //Props has the value for the room ID
-  console.log('Interval: ', interval);
-  console.log("Value: ", userList)  
   // console.log('Time: ', new Date());
   // console.log('Time: ', new Date(interval));
   
   var time1 = new Date();
   var time2 = new Date(interval);
   var differenceInTime = time1 - time2;
-  
-  // Hacky solution, but passing state variables to components triggers infinite re-render errors.  This bypasses that.
-  const minutesProp = 5 - Math.floor(differenceInTime / 1000 / 60);
+  console.log("Starting time: ", time1);
+  console.log("Current time: ", time2);
+
+  var minutesProp = 5 - Math.floor(differenceInTime / 1000 / 60);
   differenceInTime -= Math.floor(differenceInTime / 1000 / 60) * 1000 * 60;
-  const secondsProp = Math.floor(differenceInTime / 1000);
+  var secondsProp = minutesProp >= 0 ? Math.floor(differenceInTime / 1000) : 0;
+  minutesProp = minutesProp >= 0 ? minutesProp : 0;
   
   return (
     <div className={styles.container}>

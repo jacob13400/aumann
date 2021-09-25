@@ -59,6 +59,11 @@ export default function Game(props) {
   // Whether timer is still running - necessary to prevent infinite triggers of the setLock(true) call below
   const [flag, setFlag] = React.useState(true);
 
+  const updatePoints = async () => {
+    const query = {username: props.username, roomID: props.roomID, estimate: estimateValue};
+    const points = await updateUserPoints(query);
+    console.log("User Updated - at Server: ", points);
+  };
 
   // If timer has reached zero, lock the input field
   if(props.minutes <= 0 && props.seconds == 0 && flag) {
@@ -69,16 +74,11 @@ export default function Game(props) {
     updatePoints();
   }
 
-  const updatePoints = async () => {
-    const points = await updateUserPoints({estimate: estimateValue});
-    console.log("User Updated - at Server: ", points);
-  };
-
   const updateEstimate = async (estimate) => {
-    const query = {username: props.username, roomID: props.roomID, estimate: estimate};
-    const updateReturn = await updateUserEstimate(query);
+    const query = {username: props.username, roomID: props.roomID, estimate: estimateValue};
+    const points = await updateUserEstimate(query);
 
-    console.log("User Updated: ", updateReturn);
+    console.log("User Updated: ", points);
 
     // const points = await updateUserPoints(query);
     // console.log("User Updated - at Server: ", points);
