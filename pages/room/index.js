@@ -29,9 +29,7 @@ export default function Room(props) {
   const getQuestions = async () => {
     var questions = await getQuestionsSync();
 
-    console.log(questions);
-
-    setTimeout(function(){console.log("Questions: ", questions);}, 3000);
+    setTimeout(function(){console.log("Questions: ", questions)}, 3000);
   };
 
   const getUsersList = async () => {
