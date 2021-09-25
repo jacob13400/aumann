@@ -85,7 +85,7 @@ export async function getStaticProps() {
 
   // var questionsAsync = await getQuestionsAsync();
 
-  console.log(questions);
+  console.log("Initial: ", questions);
   // console.log(questionsAsync);
   return {
     props: {questions: questions}, // will be passed to the page component as props
