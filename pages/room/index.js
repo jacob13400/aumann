@@ -12,30 +12,30 @@ import { getQuestionsSync } from '../../lib/questions';
 import { getUsers } from '../api/users';
 import { getRoom } from '../api/room';
 
+var flag = false;
+
 
 export default function Room(props) {
   const username = props.username;
   const roomID = props.roomID;
 
-  const [userList, setUserList] = React.useState([{ id: 0, username: 'jozdien', roomID: 0, points: 0, estimate: "75", lock: false, color: "#0FFFFF" },
+  const [userList, setUserList] = useState([{ id: 0, username: 'jozdien', roomID: 0, points: 0, estimate: "75", lock: false, color: "#0FFFFF" },
                                                   { id: 1, username: 'zeref', roomID: 0, points: 0, estimate: "50", lock: true, color: "#F0C9A8" }]);
   const [room, setRoom] = useState({"questionID": "0","updatedAt": {"seconds": 1629388503,"nanoseconds": 722000000},"users": [{"username": "verd"}],
                                     "createdAt": {"seconds": 1629355142,"nanoseconds": 838000000},"id": "werds"});
   const [interval, setInterval] = useState(3000);
-  
-  // const [minutes, setMinutes] = useState(5);
-  // const [seconds, setSeconds] = useState(0);
+  const [timer, setTimer] = useState({"minutes": 5, "seconds": 0})
 
   const getQuestions = async () => {
     var questions = await getQuestionsSync();
 
-    setTimeout(function(){console.log("Questions: ", questions);}, 3000);
+    setTimeout(function(){console.log("Questions: ", questions);}, 0);
   };
 
   const getUsersList = async () => {
     var users = await getUsers(props.roomID)
 
-    setTimeout(function(){setUserList(users); console.log('User', users);}, 3000);
+    setTimeout(function(){setUserList(users); console.log('User', users);}, 0);
   };
 
   const getRoomDetails = async () => {
@@ -46,34 +46,36 @@ export default function Room(props) {
       setRoom(room);
       setInterval(intervalTemp);
       console.log('Room', room);
-    }, 3000);
+    }, 0);
+  };
+
+  const timeLeft = () => {
+    var startTime = new Date(interval);
+    var currTime = new Date();
+
+    var seconds = 300 - (currTime - startTime) / 1000;
+
+    if(Math.floor(seconds) <= 0){
+      return {"minutes": 0, "seconds": 0};
+    }
+    else{
+      return {"minutes": Math.floor(seconds / 60), "seconds": Math.floor(seconds % 60)};
+    }
   };
   
-  
-  // TODO: Get starting time from server before countdown so that local times are synchronized
-  
   // Function for countdown timer
-  useEffect(()=>{
-    getUsersList();
-    getRoomDetails();
-    getQuestions();
+  useEffect(() => {
+    if(!flag){
+      getQuestions();
+      getUsersList();
+      getRoomDetails();
+      flag = true;
+    }
     
-  }, []);
-  
-  //Props has the value for the room ID
-  // console.log('Time: ', new Date());
-  // console.log('Time: ', new Date(interval));
-  
-  var time1 = new Date();
-  var time2 = new Date(interval);
-  var differenceInTime = time1 - time2;
-  console.log("Starting time: ", time1);
-  console.log("Current time: ", time2);
-
-  var minutesProp = 5 - Math.floor(differenceInTime / 1000 / 60);
-  differenceInTime -= Math.floor(differenceInTime / 1000 / 60) * 1000 * 60;
-  var secondsProp = minutesProp >= 0 ? Math.floor(differenceInTime / 1000) : 0;
-  minutesProp = minutesProp >= 0 ? minutesProp : 0;
+    const timer = setTimeout(() => {
+      setTimer(timeLeft());
+    }, 1000);
+  });
   
   return (
     <div className={styles.container}>
@@ -83,14 +85,14 @@ export default function Room(props) {
       </Head>
 
       <main className={styles.main}>
-        <RoomHead userList={userList} username={username} roomID={roomID} minutes={minutesProp} seconds={secondsProp}/>
+        <RoomHead userList={userList} username={username} roomID={roomID} minutes={timer.minutes} seconds={timer.seconds}/>
         <div className={styles.body}>
           <UserList userList={userList} username={username}/>
-          <Game userList={userList} username={username} roomID={roomID} minutes={minutesProp} seconds={secondsProp}/>
+          <Game userList={userList} username={username} roomID={roomID} minutes={timer.minutes} seconds={timer.seconds}/>
           <Chat/>
         </div>
         <div className={styles.padBodyBottom}/>
-        <RoomFooter minutes={minutesProp} seconds={secondsProp}/>
+        <RoomFooter minutes={timer.minutes} seconds={timer.seconds}/>
       </main>
     </div>
   )
