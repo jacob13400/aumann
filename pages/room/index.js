@@ -77,13 +77,13 @@ export default function Room(props) {
     var number = Object.keys(questionList).length;
     var num_players = Object.keys(userList).length;
     var num_ans = 4;
-    var answers = {"Correct": questionList["1"]};
 
     var question_no = Object.keys(questionList)[Math.floor(Math.random() * number) + 1];
     var questionList = questionList[question_no];
 
     console.log(questionList);
 
+    var answers = {"Correct": questionList["1"]};
     var questionText = questionList["question"];
 
     // player_indices is an array that goes: [1, 2, ... num_players]
@@ -110,12 +110,12 @@ export default function Room(props) {
     if(!flag){
       getQuestions();
       getRoomDetails();
-      getUsersList();
       flag = true;
     }
 
+    getUsersList();
+
     const timer = setTimeout(() => {
-      makeQuestion();
       setTimer(timeLeft());
     }, 1000);
 
