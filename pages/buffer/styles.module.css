@@ -1,0 +1,45 @@
+.container {
+	height: 100vh;
+	background-color: #202020;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+
+	height: 100vh;
+}
+
+.body {
+	height: 470px;
+	display: flex;
+	flex-direction: row;
+}
+
+.round {
+	display: flex;
+	flex-direction: column;
+  
+	justify-content: center;
+	text-align: center;
+  
+	font-size: 36px;
+	font-family: "Inter-SemiBold";
+	color: #FFFFFF;
+  }
+
+.padBodyBottom {
+	flex: 0;
+}
+
+@media only screen and (max-width: 1200px) {
+	.body {
+		height: 450px;
+	}
+}
+
+@media only screen and (max-width: 850px) {
+	.body {
+		flex-direction: column;
+	}
+}
