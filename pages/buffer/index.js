@@ -7,36 +7,48 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 export default function Buffer(props) {
 
   const Router = useRouter();
-  const [minutes, setMinutes] = useState(0);
+  const [minutes, setMinutes] = useState("00");
   const [seconds, setSeconds] = useState(30);
+  const [secondsPad, setSecondsPad] = useState("");
 
   useEffect(() => {
 
-    if (minutes <= 0 && seconds <= 0){
+    if (seconds == "00"){
+      clearTimeout(timer);
       Router.push({pathname: "/room", query: {roomID: props.roomID, username: props.username}});
     }
 
     const timer = setTimeout(() => {
       setSeconds(seconds - 1);
+      if(seconds == 10){
+        setSecondsPad("0");
+      }
     }, 1000);
   });
 
   return (
     <div className={styles.container}>
       <Head>
-        <title>Loading....</title>
+        <title>Waiting Room</title>
         <link rel="icon" href="../icons/logo.png" />
       </Head>
 
       <main className={styles.main}>
         <div className={styles.body}>
-          <div className={styles.round}>
-            This is the waiting room. We will wait until the timer runs out for more players to join
+          <div className={styles.title}>
+            Waiting Room
           </div>
-        </div>
-
-        <div className={styles.round}>
-          {minutes} : {seconds}
+          <div className={styles.timer}>
+            {minutes} : {secondsPad}{seconds}
+          </div>
+          <div className={styles.bottom}>
+            <div className={styles.subtitle}>
+              Players can join until the timer runs out.
+            </div>
+            <div className={styles.roomID}>
+              Room ID: {props.roomID}
+            </div>
+          </div>
         </div>
       </main>
     </div>
