@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
+import {useRouter} from 'next/router';
 import styles from './styles.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function Buffer(props) {
 
+  const Router = useRouter();
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(30);
 
