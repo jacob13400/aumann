@@ -9,6 +9,7 @@ import { updateRoom } from '../../lib/roomUpdate';
 export default function Buffer(props) {
 
   const Router = useRouter();
+  const [admin, setAdmin] = useState(false);
   const [onEnter, setOnEnter] = useState(true);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(10);
@@ -18,6 +19,10 @@ export default function Buffer(props) {
   const onEnterUpdate = async () => {
     var query = {roomID: props.roomID}
     var room = await getRoom(query);
+
+    if (room.bufferTime == 10 || room.bufferTime == "10"){
+      setAdmin(true);
+    }
 
     setSeconds(room.bufferTime)
 
@@ -52,8 +57,10 @@ export default function Buffer(props) {
       if(seconds == 10){
         setSecondsPad("0");
       }
-
-      onUpdate(true);
+      
+      if (admin){
+        onUpdate(true);
+      }
     }, 1000);
   });
 
