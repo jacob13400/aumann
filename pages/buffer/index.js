@@ -7,14 +7,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 export default function Buffer(props) {
 
   const Router = useRouter();
-<<<<<<< HEAD
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(10);
-=======
-  const [minutes, setMinutes] = useState("00");
-  const [seconds, setSeconds] = useState(30);
-  const [secondsPad, setSecondsPad] = useState("");
->>>>>>> 35e34b044f908ad79ba24919e2375c372530cba6
 
   useEffect(() => {
 
