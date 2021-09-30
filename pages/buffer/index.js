@@ -8,7 +8,7 @@ export default function Buffer(props) {
 
   const Router = useRouter();
   const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(30);
+  const [seconds, setSeconds] = useState(10);
 
   useEffect(() => {
 
