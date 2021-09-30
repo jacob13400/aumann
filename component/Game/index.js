@@ -8,7 +8,7 @@ import AlertEmptyModal from '../../component/Modals/AlertEmptyModal';
 import AlertLimitModal from '../../component/Modals/AlertLimitModal';
 import { updateUserEstimate } from '../../lib/userEstimate';
 import { updateUserPoints } from '../../lib/userPoints';
-import { getScore } from '../../pages/api/calculateScore';
+// import { getScore } from '../../pages/api/calculateScore';
 
 
 // Function to handle changing of value in the estimate input field - some values aren't allowed, like characters, etc.
