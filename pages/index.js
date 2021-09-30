@@ -5,7 +5,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Button from '../component/Button';
 import InfoModal from '../component/Modals/InfoModal';
-import PlayModal from '../component/Modals/PlayModal';
+import CreateModal from '../component/Modals/CreateModal';
+import JoinModal from '../component/Modals/JoinModal';
 import Credits from '../component/Credits';
 
 import { getQuestionsSync } from '../lib/questions';
@@ -13,7 +14,8 @@ import { getQuestionsSync } from '../lib/questions';
 
 export default function Home(props) {
   const [infoModalShow, setInfoModalShow] = React.useState(false);
-  const [playModalShow, setPlayModalShow] = React.useState(false);
+  const [createModalShow, setCreateModalShow] = React.useState(false);
+  const [joinModalShow, setJoinModalShow] = React.useState(false);
   
   /*
 
@@ -36,9 +38,6 @@ export default function Home(props) {
           <div className={styles.name}>
             Aumann's Game
           </div>
-          <div className={styles.logo}>
-            <img className={styles.logoContainer} src={"/icons/group.png"} alt={"Group of People"}/>
-          </div>
           <div className={styles.padMiddle}>
           </div>
           <div className={styles.text}>
@@ -52,10 +51,10 @@ export default function Home(props) {
             <Button type={"info"} text={"How To Play"} action={() => setInfoModalShow(true)}/>
           </div>
           <div className={styles.play}>
-            <Button type={"play"} text={"Join Room"} action={() => setPlayModalShow(true)}/>
+            <Button type={"play"} text={"Create Room"} action={() => setCreateModalShow(true)}/>
           </div>
           <div className={styles.play}>
-            <Button type={"play"} text={"Create Room"} action={() => setPlayModalShow(true)}/>
+            <Button type={"play"} text={"Join Room"} action={() => setJoinModalShow(true)}/>
           </div>
           <div className={styles.padBottom}>
           </div>
@@ -65,9 +64,13 @@ export default function Home(props) {
           show={infoModalShow}
           onHide={() => setInfoModalShow(false)}
         />
-        <PlayModal
-          show={playModalShow}
-          onHide={() => setPlayModalShow(false)}
+        <CreateModal
+          show={createModalShow}
+          onHide={() => setCreateModalShow(false)}
+        />
+        <JoinModal
+          show={joinModalShow}
+          onHide={() => setJoinModalShow(false)}
         />
       </main>
     </div>

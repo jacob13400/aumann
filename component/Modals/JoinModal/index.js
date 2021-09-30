@@ -9,16 +9,18 @@ import { getRoom } from '../../../lib/room';
 import { getUser } from '../../../lib/userCreate';
 import { getUserRandom, checkUser } from '../../../lib/anonymousUser';
 
-export default function PlayModal(props) { 
+export default function JoinModal(props) { 
   const [formState, setFormState] = React.useState({
     roomID: "",
     username: "",
+    password: "",
   });
 
   const Router = useRouter();
 
   const onEnter = async () => {
     localStorage.setItem("username", formState.username);
+    localStorage.setItem("password", formState.password);
     localStorage.setItem("roomID", formState.roomID);
 
     console.log("Sent: ", formState);
@@ -29,9 +31,9 @@ export default function PlayModal(props) {
 
     console.log("Room Switch: ", room)
     if (room.isBuffer)
-      Router.push({pathname: "/buffer", query: {roomID: formState.roomID, username: formState.username}});
+      Router.push({pathname: "/buffer", query: {roomID: formState.roomID, username: formState.username, password: formState.password}});
     else
-      Router.push({pathname: "/room", query: {roomID: formState.roomID, username: formState.username}});
+      Router.push({pathname: "/room", query: {roomID: formState.roomID, username: formState.username, password: formState.password}});
   }
 
   return (
@@ -63,11 +65,22 @@ export default function PlayModal(props) {
             <Form.Label>Username</Form.Label>
             <Form.Control 
               type="text" 
-              placeholder="Enter your name" 
+              placeholder="Enter display name" 
               onChange={(e) => 
                 setFormState({ ...formState, username: e.target.value})
               }
               value={formState.username}
+            />
+          </Form.Group>
+          <Form.Group controlId="password">
+            <Form.Label>Password</Form.Label>
+            <Form.Control 
+              type="text" 
+              placeholder="Enter / Set your password for this room" 
+              onChange={(e) => 
+                setFormState({ ...formState, password: e.target.value})
+              }
+              value={formState.password}
             />
           </Form.Group>
         </Form>
