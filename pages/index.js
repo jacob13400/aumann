@@ -52,7 +52,10 @@ export default function Home(props) {
             <Button type={"info"} text={"How To Play"} action={() => setInfoModalShow(true)}/>
           </div>
           <div className={styles.play}>
-            <Button type={"play"} text={"Join / Create Room"} action={() => setPlayModalShow(true)}/>
+            <Button type={"play"} text={"Join Room"} action={() => setPlayModalShow(true)}/>
+          </div>
+          <div className={styles.play}>
+            <Button type={"play"} text={"Create Room"} action={() => setPlayModalShow(true)}/>
           </div>
           <div className={styles.padBottom}>
           </div>
