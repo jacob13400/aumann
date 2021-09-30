@@ -3,19 +3,48 @@ import Head from 'next/head';
 import {useRouter} from 'next/router';
 import styles from './styles.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { getRoom } from '../../lib/roomGet';
+import { updateRoom } from '../../lib/roomUpdate';
 
 export default function Buffer(props) {
 
   const Router = useRouter();
+  const [onEnter, setOnEnter] = useState(true);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(10);
   const [secondsPad, setSecondsPad] = useState("");
+
+
+  const onEnterUpdate = async () => {
+    var query = {roomID: props.roomID}
+    var room = await getRoom(query);
+
+    setSeconds(room.bufferTime)
+
+    if (!room.isBuffer)
+      Router.push({pathname: "/room", query: {roomID: props.roomID, username: props.username}});
+
+    console.log("Update Room on Enter: ", room);
+  }
+
+  const onUpdate = async (isBuffer) => {
+    var query = {roomID: props.roomID, bufferTime: seconds, isBuffer: isBuffer}
+    console.log("Update Room: ", query);
+    var room = await updateRoom(query);
+
+  }
 
   useEffect(() => {
 
     if (seconds == "00"){
       clearTimeout(timer);
+      onUpdate(false);
       Router.push({pathname: "/room", query: {roomID: props.roomID, username: props.username}});
+    }
+
+    if (onEnter){
+      setOnEnter(false);
+      onEnterUpdate();
     }
 
     const timer = setTimeout(() => {
@@ -23,6 +52,8 @@ export default function Buffer(props) {
       if(seconds == 10){
         setSecondsPad("0");
       }
+
+      onUpdate(true);
     }, 1000);
   });
 

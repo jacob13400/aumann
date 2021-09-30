@@ -27,7 +27,11 @@ export default function PlayModal(props) {
 
     if(!user) var room = await getRoom(formState);
 
-    Router.push({pathname: "/buffer", query: {roomID: formState.roomID, username: formState.username}});
+    console.log("Room Switch: ", room)
+    if (room.isBuffer)
+      Router.push({pathname: "/buffer", query: {roomID: formState.roomID, username: formState.username}});
+    else
+      Router.push({pathname: "/room", query: {roomID: formState.roomID, username: formState.username}});
   }
 
   return (
