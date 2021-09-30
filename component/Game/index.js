@@ -44,6 +44,7 @@ export default function Game(props) {
 
   // Hook for user's answer
   const [answer, setAnswer] = React.useState("Deagol");
+  const [answerBool, setAnswerBool] = React.useState(false);
 
   // Modal show/hide flags
   const [lockModalShow, setLockModalShow] = React.useState(false);
@@ -60,7 +61,7 @@ export default function Game(props) {
   const [flag, setFlag] = React.useState(true);
 
   const updatePoints = async () => {
-    const query = {username: props.username, roomID: props.roomID, estimate: estimateValue};
+    const query = {username: props.username, roomID: props.roomID, estimate: estimateValue, answerBool: answerBool};
     const points = await updateUserPoints(query);
     console.log("User Updated - at Server: ", points);
   };
@@ -75,7 +76,7 @@ export default function Game(props) {
   }
 
   const updateEstimate = async (estimate) => {
-    const query = {username: props.username, roomID: props.roomID, estimate: estimateValue};
+    const query = {username: props.username, roomID: props.roomID, estimate: estimate};
     const points = await updateUserEstimate(query);
 
     console.log("User Updated: ", points);
