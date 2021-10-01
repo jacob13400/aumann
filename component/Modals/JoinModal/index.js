@@ -35,7 +35,7 @@ export default function JoinModal(props) {
         var query = {flag: true, message: formState.username};
         var usernameCoverted = convertData(query);
 
-        Router.push({pathname: "/buffer", query:{roomID: roomIDCoverted, username: usernameCoverted}});
+        Router.push({pathname: "/buffer", query:{droom2021: roomIDCoverted, duser2021: usernameCoverted}});
       }
       else{
         console.log("Room does not Exists");

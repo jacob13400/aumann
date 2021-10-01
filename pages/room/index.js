@@ -16,8 +16,8 @@ var flag = false;
 
 
 export default function Room(props) {
-  const username = props.username;
-  const roomID = props.roomID;
+  const username = props.duser2021;
+  const roomID = props.droom2021;
 
   const [userList, setUserList] = useState([{ id: 0, username: 'jozdien', roomID: 0, points: 0, estimate: "75", lock: false, color: "#0FFFFF" },
                                                   { id: 1, username: 'zeref', roomID: 0, points: 0, estimate: "50", lock: true, color: "#F0C9A8" }]);
@@ -37,7 +37,7 @@ export default function Room(props) {
   };
 
   const getUsersList = async () => {
-    var users = await getUsers(props.roomID)
+    var users = await getUsers(props.droom2021)
 
     setTimeout(function(){
       setUserList(users); 
@@ -45,7 +45,7 @@ export default function Room(props) {
   };
 
   const getRoomDetails = async () => {
-    var room = await getRoom(props.roomID)
+    var room = await getRoom(props.droom2021)
     const intervalTemp = room.createdAt.seconds*1000+(room.createdAt.nanoseconds*(10**-6));
     
     setTimeout(function(){

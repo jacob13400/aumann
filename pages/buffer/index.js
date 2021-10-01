@@ -20,10 +20,10 @@ export default function Buffer(props) {
 
 
   const onEnterUpdate = async () => {
-    var query = {flag: false, message: props.roomID};
+    var query = {flag: false, message: props.droom2021};
     var roomIDCoverted = convertData(query);
 
-    var query = {flag: false, message: props.username};
+    var query = {flag: false, message: props.duser2021};
     var usernameCoverted = convertData(query);
 
     var query = {roomID: Number(roomIDCoverted)}
@@ -39,7 +39,7 @@ export default function Buffer(props) {
     setUsername(usernameCoverted);
 
     if (!room.isBuffer)
-      Router.push({pathname: "/room", query: {roomID: props.roomID, username: props.username}});
+      Router.push({pathname: "/room", query: {droom2021: props.droom2021, duser2021: props.duser2021}});
 
     console.log("Update Room on Enter: ", room);
   }
@@ -59,7 +59,7 @@ export default function Buffer(props) {
     if (seconds == "00"){
       clearTimeout(timer);
       onUpdate(false);
-      Router.push({pathname: "/room", query: {roomID: props.roomID, username: props.username}});
+      Router.push({pathname: "/room", query: {droom2021: props.droom2021, duser2021: props.duser2021}});
     }
 
     if (onEnter){
