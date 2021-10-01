@@ -23,10 +23,9 @@ export default function JoinModal(props) {
     console.log("Sent: ", formState);
 
     const userExists = await getUser(formState);
-    var room = null;
 
     if(!userExists){
-      roomExists = await addUserRoom(formState);
+      var roomExists = await addUserRoom(formState);
       
       if (roomExists){
         Router.push({pathname: "/buffer", query: {roomID: formState.roomID, username: formState.username}});

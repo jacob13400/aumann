@@ -16,22 +16,21 @@ export default function CreateModal(props) {
   const Router = useRouter();
 
   const onEnter = async () => {
-    localStorage.setItem("username", formState.username);
-
+    
     console.log("Sent: ", formState);
-
-    const userExists = await getUser(formState);
-
-    var room = null;
-    if(!userExists){
-      roomID = await getRoom(formState);
-      localStorage.setItem("roomID", formState.roomID);
-      console.log("Room Switch: ", room)
-      
+    
+    const roomID = await getRoom(formState);
+    var query = {username: formState.username, roomID: roomID};
+    const userExists = await getUser(query);
+    
+    localStorage.setItem("username", formState.username);
+    localStorage.setItem("roomID", formState.roomID);
+    console.log("Room Switch: ", roomID)
+    
+    if (userExists){
+      console.log('User Exists');
+    }else{
       Router.push({pathname: "/buffer", query: {roomID: roomID, username: formState.username}});
-    }
-    else{
-      console.log("User Already Exists");
     }
 
   }
