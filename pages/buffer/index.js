@@ -5,26 +5,38 @@ import styles from './styles.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { getRoom } from '../../lib/roomGet';
 import { updateRoom } from '../../lib/roomUpdate';
+import { convertData } from '../../lib/encryptDecrypt';
 
 export default function Buffer(props) {
 
   const Router = useRouter();
   const [admin, setAdmin] = useState(false);
+  const [roomID, setRoomID] = useState(false);
+  const [username, setUsername] = useState(false);
   const [onEnter, setOnEnter] = useState(true);
   const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(10);
+  const [seconds, setSeconds] = useState(15);
   const [secondsPad, setSecondsPad] = useState("");
 
 
   const onEnterUpdate = async () => {
-    var query = {roomID: props.roomID}
+    var query = {flag: false, message: props.roomID};
+    var roomIDCoverted = convertData(query);
+
+    var query = {flag: false, message: props.username};
+    var usernameCoverted = convertData(query);
+
+    var query = {roomID: Number(roomIDCoverted)}
+
     var room = await getRoom(query);
 
-    if (room.bufferTime == 10 || room.bufferTime == "10"){
+    if (room.admin == usernameCoverted){
       setAdmin(true);
     }
 
-    setSeconds(room.bufferTime)
+    setSeconds(room.bufferTime);
+    setRoomID(roomIDCoverted);
+    setUsername(usernameCoverted);
 
     if (!room.isBuffer)
       Router.push({pathname: "/room", query: {roomID: props.roomID, username: props.username}});
@@ -33,7 +45,10 @@ export default function Buffer(props) {
   }
 
   const onUpdate = async (isBuffer) => {
-    var query = {roomID: props.roomID, bufferTime: seconds, isBuffer: isBuffer}
+
+    if (seconds <= 0 && isBuffer) return;
+
+    var query = {roomID: roomID, bufferTime: seconds, isBuffer: isBuffer}
     console.log("Update Room: ", query);
     var room = await updateRoom(query);
 
@@ -84,7 +99,7 @@ export default function Buffer(props) {
               Players can join until the timer runs out.
             </div>
             <div className={styles.roomID}>
-              Room ID: {props.roomID}
+              Room ID: {roomID}
             </div>
           </div>
         </div>
