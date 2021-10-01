@@ -8,7 +8,7 @@ import UserList from '../../component/UserList';
 import Game from '../../component/Game';
 import Chat from '../../component/Chat';
 import RoomFooter from '../../component/RoomFooter';
-import { getQuestionsSync } from '../../lib/questions';
+import { getQuestions } from '../../lib/questionsGet';
 import { getUsers } from '../api/users';
 import { getRoom } from '../api/room';
 
@@ -27,8 +27,8 @@ export default function Room(props) {
   const [questions, setQuestions] = useState([]);
   const [timer, setTimer] = useState({"minutes": 5, "seconds": 0})
 
-  const getQuestions = async () => {
-    var questions = await getQuestionsSync();
+  const getQuestionsFunction = async () => {
+    var questions = await getQuestions();
 
     setTimeout(function(){
       setQuestions(questions); 
@@ -37,7 +37,7 @@ export default function Room(props) {
   };
 
   const getUsersList = async () => {
-    var users = await getUsers(props.droom2021)
+    var users = await getUsers(roomID)
 
     setTimeout(function(){
       setUserList(users); 
@@ -108,7 +108,7 @@ export default function Room(props) {
   // I just put it inside so that the console doesn't get flooded during development.
   useEffect(() => {
     if(!flag){
-      getQuestions();
+      getQuestionsFunction();
       getRoomDetails();
       flag = true;
     }
