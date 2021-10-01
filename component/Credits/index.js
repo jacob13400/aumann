@@ -11,7 +11,7 @@ export default function Credits() {
           <br/>
           <a href="https://www.jozdien.com/" style={{textDecoration: 'none', color: '#606060'}}>jozdien</a>
           <br/>
-          <a href="https://github.com/jacob13400" style={{textDecoration: 'none', color: '#606060'}}>zeref</a>
+          <a href="https://jacobabraham.live/" style={{textDecoration: 'none', color: '#606060'}}>zeref</a>
           <br/>
           <a href="" style={{textDecoration: 'none', color: '#606060'}}>su</a>
           <br/>
