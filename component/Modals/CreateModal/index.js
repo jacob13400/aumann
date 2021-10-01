@@ -7,6 +7,7 @@ import styles from './styles.module.css';
 import Button from '../../Button';
 import { getRoom } from '../../../lib/roomCreate';
 import { getUser } from '../../../lib/userCreate';
+import { convertData } from '../../../lib/encryptDecrypt';
 
 export default function CreateModal(props) { 
   const [formState, setFormState] = React.useState({
@@ -30,7 +31,13 @@ export default function CreateModal(props) {
     if (userExists){
       console.log('User Exists');
     }else{
-      Router.push({pathname: "/buffer", query: {roomID: roomID, username: formState.username}});
+      var query = {flag: true, message: roomID.toString()};
+      var roomIDCoverted = convertData(query);
+
+      var query = {flag: true, message: formState.username};
+      var usernameCoverted = convertData(query);
+
+      Router.push({pathname: "/buffer", query:{roomID: roomIDCoverted, username: usernameCoverted}});
     }
 
   }

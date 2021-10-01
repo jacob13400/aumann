@@ -5,6 +5,7 @@
 /.pnp
 .pnp.js
 aumannServiceAccountKeys.json
+encryptDecrypt.js
 
 # testing
 /coverage

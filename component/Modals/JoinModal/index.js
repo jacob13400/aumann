@@ -7,6 +7,7 @@ import styles from './styles.module.css';
 import Button from '../../Button';
 import { addUserRoom } from '../../../lib/roomUserAdd';
 import { getUser } from '../../../lib/userCreate';
+import { convertData } from '../../../lib/encryptDecrypt';
 
 export default function JoinModal(props) { 
   const [formState, setFormState] = React.useState({
@@ -28,7 +29,13 @@ export default function JoinModal(props) {
       var roomExists = await addUserRoom(formState);
       
       if (roomExists){
-        Router.push({pathname: "/buffer", query: {roomID: formState.roomID, username: formState.username}});
+        var query = {flag: true, message: (formState.roomID).toString()};
+        var roomIDCoverted = convertData(query);
+
+        var query = {flag: true, message: formState.username};
+        var usernameCoverted = convertData(query);
+
+        Router.push({pathname: "/buffer", query:{roomID: roomIDCoverted, username: usernameCoverted}});
       }
       else{
         console.log("Room does not Exists");
