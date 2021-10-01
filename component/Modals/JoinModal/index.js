@@ -38,7 +38,7 @@ export default function JoinModal(props) {
         Router.push({pathname: "/buffer", query:{droom2021: roomIDCoverted, duser2021: usernameCoverted}});
       }
       else{
-        console.log("Room does not Exists");
+        console.log("Room does not Exists/Game has already started");
       }
     }
     else{

@@ -12,7 +12,6 @@ export default function Buffer(props) {
   const Router = useRouter();
   const [admin, setAdmin] = useState(false);
   const [roomID, setRoomID] = useState(false);
-  const [username, setUsername] = useState(false);
   const [onEnter, setOnEnter] = useState(true);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(15);
@@ -36,7 +35,6 @@ export default function Buffer(props) {
 
     setSeconds(room.bufferTime);
     setRoomID(roomIDCoverted);
-    setUsername(usernameCoverted);
 
     if (!room.isBuffer)
       Router.push({pathname: "/room", query: {droom2021: props.droom2021, duser2021: props.duser2021}});
