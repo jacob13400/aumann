@@ -7,10 +7,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ButtonBuffer from '../../component/ButtonBuffer';
 
 import { getRoom } from '../../lib/roomGet';
-import { updateRoom } from '../../lib/roomUpdate';
 import { getQuestions } from '../../lib/questionsGet';
 import { getUsers } from '../api/users';
 import { convertData } from '../../lib/encryptDecrypt';
+import { assignQuestions } from '../../lib/assignQuestions';
 
 export default function Buffer(props) {
 
@@ -39,7 +39,7 @@ export default function Buffer(props) {
     setUserList(users); 
   };
   
-  const makeQuestion = () => {
+  const makeQuestion = async () => {
     var questionList = questions["questions"];
     var number = Object.keys(questionList).length;
     var num_players = Object.keys(userList).length;
@@ -50,8 +50,10 @@ export default function Buffer(props) {
     
     console.log(questionList);
 
-    var answers = {"Correct": questionList["1"]};
-    var questionText = questionList["question"];
+    var answers = {};
+    var answersCorrect = {"Correct": questionList["1"]};
+    answersCorrect["question"] = questionList["question"];
+    answersCorrect["questionID"] = question_no;
 
     // player_indices is an array that goes: [1, 2, ... num_players]
     var player_indices = Array.from(new Array(num_players), (x, i) => i + 1);
@@ -60,7 +62,7 @@ export default function Buffer(props) {
 
     var finalAns = player_indices.splice(Math.random() * num_players, 1);
     answers[finalAns] = questionList["1"];
-    answers["CorrectIndex"] = finalAns[0];
+    answersCorrect["CorrectIndex"] = finalAns[0];
 
     for (var i = 0; i < num_players - 1; i++) {
       var player_index = player_indices.splice(Math.random() * player_indices.length, 1);
@@ -69,8 +71,21 @@ export default function Buffer(props) {
       answers[player_index.toString()] = questionList[ans_index.toString()];
     };
 
-    console.log("Answers: ", answers);
+    console.log("Answers: ", answers, answersCorrect);
+    var query = {roomID: roomID};
+    var tempassignQuestion = await assignQuestions(query, answers, answersCorrect);
+    
+    Router.push({pathname: "/room", query: {droom2021: props.droom2021, duser2021: props.duser2021}});
   };
+
+
+  const checkBuffer = async () => {
+    var query = {roomID: Number(roomID)}
+    var room = await getRoom(query);
+    
+    if (!room.isBuffer)
+      Router.push({pathname: "/room", query: {droom2021: props.droom2021, duser2021: props.duser2021}});
+  }
 
   const onEnterUpdate = async () => {
     var query = {flag: false, message: props.droom2021};
@@ -105,6 +120,7 @@ export default function Buffer(props) {
 
     setTimeout(function(){
       getUsersList();
+      checkBuffer();
       console.log(userList);
     }, 1000);
   });
