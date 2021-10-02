@@ -80,6 +80,8 @@ export default function Buffer(props) {
 
 
   const checkBuffer = async () => {
+    if (onEnter || roomID == 0) return;
+
     var query = {roomID: Number(roomID)}
     var room = await getRoom(query);
     
@@ -89,10 +91,10 @@ export default function Buffer(props) {
 
   const onEnterUpdate = async () => {
     var query = {flag: false, message: props.droom2021};
-    var roomIDCoverted = convertData(query);
+    var roomIDCoverted = await convertData(query);
 
     var query = {flag: false, message: props.duser2021};
-    var usernameCoverted = convertData(query);
+    var usernameCoverted = await convertData(query);
 
     var query = {roomID: Number(roomIDCoverted)}
 

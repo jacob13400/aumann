@@ -32,10 +32,10 @@ export default function CreateModal(props) {
       console.log('User Exists');
     }else{
       var query = {flag: true, message: roomID.toString()};
-      var roomIDCoverted = convertData(query);
+      var roomIDCoverted = await convertData(query);
 
       var query = {flag: true, message: formState.username};
-      var usernameCoverted = convertData(query);
+      var usernameCoverted = await convertData(query);
 
       Router.push({pathname: "/buffer", query:{droom2021: roomIDCoverted, duser2021: usernameCoverted}});
     }

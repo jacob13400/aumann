@@ -30,10 +30,10 @@ export default function JoinModal(props) {
       
       if (roomExists){
         var query = {flag: true, message: (formState.roomID).toString()};
-        var roomIDCoverted = convertData(query);
+        var roomIDCoverted = await convertData(query);
 
         var query = {flag: true, message: formState.username};
-        var usernameCoverted = convertData(query);
+        var usernameCoverted = await convertData(query);
 
         Router.push({pathname: "/buffer", query:{droom2021: roomIDCoverted, duser2021: usernameCoverted}});
       }

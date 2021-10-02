@@ -8,16 +8,17 @@ import UserList from '../../component/UserList';
 import Game from '../../component/Game';
 import Chat from '../../component/Chat';
 import RoomFooter from '../../component/RoomFooter';
+import { convertData } from '../../lib/encryptDecrypt';
 import { getQuestions } from '../../lib/questionsGet';
 import { getUsers } from '../api/users';
-import { getRoom } from '../api/room';
+import { getRoom } from '../../lib/roomGet';
 
 var flag = false;
 
 
 export default function Room(props) {
-  const username = props.duser2021;
-  const roomID = props.droom2021;
+  const [roomID, setRoomID] = useState(props.droom2021);
+  const [username, setUsername] = useState(props.duser2021);
 
   const [userList, setUserList] = useState([{ id: 0, username: 'jozdien', roomID: 0, points: 0, estimate: "75", lock: false, color: "#0FFFFF" },
                                                   { id: 1, username: 'zeref', roomID: 0, points: 0, estimate: "50", lock: true, color: "#F0C9A8" }]);
@@ -45,9 +46,21 @@ export default function Room(props) {
   };
 
   const getRoomDetails = async () => {
-    var room = await getRoom(props.droom2021)
+    var query = {flag: false, message: props.droom2021};
+    var roomIDCoverted = await convertData(query);
+
+    query = {flag: false, message: props.duser2021};
+    var usernameConverted = await convertData(query);
+    
+    setRoomID(roomIDCoverted);
+    setUsername(usernameConverted);
+    
+    query = {roomID: Number(roomIDCoverted)};
+    var room = await getRoom(query)
+    console.log("Data that is needed:", room)
     const intervalTemp = room.createdAt.seconds*1000+(room.createdAt.nanoseconds*(10**-6));
     
+
     setTimeout(function(){
       setRoom(room);
       setInterval(intervalTemp);
