@@ -36,7 +36,7 @@ export default function Buffer(props) {
 
   const getUsersList = async () => {
     var users = await getUsers(roomID);
-    setUserList(users); 
+    setUserList(users);
   };
   
   const makeQuestion = async () => {
@@ -123,7 +123,7 @@ export default function Buffer(props) {
     setTimeout(function(){
       getUsersList();
       checkBuffer();
-      console.log(userList);
+      console.log("User List: ", userList);
     }, 1000);
   });
 
@@ -139,13 +139,20 @@ export default function Buffer(props) {
           <div className={styles.title}>
             Waiting Room
           </div>
+          <div className={styles.button}>
             <ButtonBuffer isAdmin={admin} text={"Start"} action={() => {makeQuestion();}}></ButtonBuffer>
-          <div className={styles.bottom}>
+          </div>
+          <div className={styles.description}>
             <div className={styles.subtitle}>
               Players can join until the admin starts the game.
             </div>
             <div className={styles.roomID}>
               Room ID: {roomID}
+            </div>
+          </div>
+          <div className={styles.bottom}>
+            <div className={styles.players}>
+              Players: {userList.map(a => a.username).join(", ")}
             </div>
           </div>
         </div>
