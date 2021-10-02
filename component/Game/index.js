@@ -80,9 +80,6 @@ export default function Game(props) {
     const points = await updateUserEstimate(query);
 
     console.log("User Updated: ", points);
-
-    // const points = await updateUserPoints(query);
-    // console.log("User Updated - at Server: ", points);
   };
 
 
