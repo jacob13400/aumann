@@ -2,7 +2,7 @@ a.link :hover {
   border-color: #A0A0A0;
 }
 
-.containerPI {
+.container {
   flex: 1;
   display: flex;
   flex-direction: row;
@@ -18,64 +18,26 @@ a.link :hover {
   border-color: #FFFFFF;
 }
 
-.textPI {
+.text {
   font-size: 20px;
   font-family: Inter-SemiBold;
   color: #FFFFFF;
   text-align: center;
 }
 
-a.modal :hover {
-  background-color: #202020;
-}
-
-.textModal {
-  font-size: 16px;
-  font-family: Inter-SemiBold;
-  color: #F0F0F0;
-  text-align: center;
-}
-
-.containerLock {
-  flex: 1;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-
-  width: 80px;
-  height: 40px;
-  border-style: solid;
-  border-radius: 5px;
-  border-width: 1px;
-  border-color: #FFFFFF;
-}
-
-a.lock :hover {
-  border-color: #A0A0A0;
-}
-
-.textLock {
-  font-size: 14px;
-  font-family: Inter-Regular;
-  color: #F0F0F0;
-  text-align: center;
-}
-
 @media only screen and (max-width: 900px) {
-  .containerPI {
+  .container {
     width: calc(300px + 20vw);
   }
 }
 
 @media only screen and (max-width: 600px) {
-  .containerPI {
+  .container {
     height: 15vw;
     width: calc(150px + 38.33vw);
     border-width: 1px;
   }
-  .textPI {
+  .text {
     font-size: 4.37vw;
   }
 }

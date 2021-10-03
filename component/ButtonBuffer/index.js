@@ -4,8 +4,8 @@ export default function ButtonBuffer({isAdmin, text, action}) {
   if(isAdmin) {
     return (
       <a className={styles.link} onClick={action} style={{textDecoration: 'none'}}>
-        <div className={styles.containerPI}>
-          <div className={styles.textPI}>
+        <div className={styles.container}>
+          <div className={styles.text}>
             {text}
           </div>
         </div>
@@ -14,13 +14,13 @@ export default function ButtonBuffer({isAdmin, text, action}) {
   }
   else {
     return (
-      <a className={styles.lock} onClick={action} style={{textDecoration: 'none'}}>
-        <div className={styles.containerLock}>
-          <div className={styles.textLock}>
+      <div className={styles.lock}>
+        <div className={styles.container}>
+          <div className={styles.text}>
             Wait for Admin
           </div>
         </div>
-      </a>
+      </div>
     )
   }
 }
