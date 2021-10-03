@@ -10,7 +10,8 @@ import { getRoom } from '../../lib/roomGet';
 import { getQuestions } from '../../lib/questionsGet';
 import { getUsers } from '../api/users';
 import { convertData } from '../../lib/encryptDecrypt';
-import { assignQuestions } from '../../lib/assignQuestions';
+import { assignQuestionsRoom } from '../../lib/assignQuestionsRoom';
+import { assignQuestionsUser } from '../../lib/assignQuestionsUser';
 
 export default function Buffer(props) {
 
@@ -27,6 +28,7 @@ export default function Buffer(props) {
       }}});
   const [admin, setAdmin] = useState(false);
   const [roomID, setRoomID] = useState(false);
+  const [username, setUsername] = useState(false);
   const [onEnter, setOnEnter] = useState(true);
 
   const getQuestionsFunction = async () => {
@@ -71,10 +73,20 @@ export default function Buffer(props) {
       answers[player_index.toString()] = questionList[ans_index.toString()];
     };
 
+    var query = {roomID: roomID, username: username};
+    var tempassignQuestion1 = await assignQuestionsRoom(query, answers, answersCorrect);
     console.log("Answers: ", answers, answersCorrect);
-    var query = {roomID: roomID};
-    var tempassignQuestion = await assignQuestions(query, answers, answersCorrect);
     
+    var answersIterate = Object.keys(answers);
+    var tempUserList = userList;
+    for (var iter = 0; iter < tempUserList.length; iter++){
+      query = {roomID: roomID, username: tempUserList[iter].username, index: answersIterate[iter], answer: answers[answersIterate[iter]]};
+      console.log("User Data Update: ", query)
+
+      var tempassignQuestion2 = await assignQuestionsUser(query, answersCorrect);
+
+    }
+
     Router.push({pathname: "/room", query: {droom2021: props.droom2021, duser2021: props.duser2021}});
   };
 
@@ -105,6 +117,7 @@ export default function Buffer(props) {
     }
 
     setRoomID(roomIDCoverted);
+    setUsername(usernameCoverted);
 
     getQuestionsFunction();
 
