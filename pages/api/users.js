@@ -9,6 +9,5 @@ export const getUsers = async (roomID) => {
   snapshot.forEach((doc) => {
     result.push(doc.data());
   });
-  console.log('Data received: ', result);
   return result;
 }

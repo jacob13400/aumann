@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import styles from './styles.module.css';
 
@@ -37,13 +37,15 @@ const handleLock = (estimateValue, setLockModalShow, setLock, setAlertEmptyModal
   }
 }
 
+var questionFlag = false;
+
 
 export default function Game(props) {
   // Hook for question
-  const [question, setQuestion] = React.useState("In the epic fantasy series Lord of the Rings, what was the birth name of the creature Gollum?");
+  const [question, setQuestion] = React.useState("What is the air-speed velocity of an unladen swallow?");
 
   // Hook for user's answer
-  const [answer, setAnswer] = React.useState("Deagol");
+  const [answer, setAnswer] = React.useState("42");
   const [answerBool, setAnswerBool] = React.useState(false);
 
   // Modal show/hide flags
@@ -81,6 +83,25 @@ export default function Game(props) {
 
     console.log("User Updated: ", points);
   };
+
+  useEffect(() => {
+    if(!questionFlag){
+      if(props.userList[0]){
+        if(props.userList[0].question != "What is the air-speed velocity of an unladen swallow?"){
+          setQuestion(props.userList[0].question.replaceAll("&quot;", "\""));
+
+          props.userList.map((player, index) => {
+            if(player.username == props.username){
+              setAnswer(player.answer);
+              setAnswerBool(player.answerBool);
+            }
+          })
+
+          questionFlag = true;
+        }
+      }
+    }
+  });
 
 
   return (

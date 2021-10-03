@@ -20,29 +20,21 @@ export default function Room(props) {
   const [roomID, setRoomID] = useState(props.droom2021);
   const [username, setUsername] = useState(props.duser2021);
 
-  const [userList, setUserList] = useState([{ id: 0, username: 'jozdien', roomID: 0, points: 0, estimate: "75", lock: false, color: "#0FFFFF" },
-                                                  { id: 1, username: 'zeref', roomID: 0, points: 0, estimate: "50", lock: true, color: "#F0C9A8" }]);
+  const [userList, setUserList] = useState([{ id: 0, username: 'jozdien', roomID: 0, points: 0, estimate: "75", lock: false, 
+                                              color: "#0FFFFF", question: "What is the air-speed velocity of an unladen swallow?"}]);
+  
   const [room, setRoom] = useState({"questionID": "0","updatedAt": {"seconds": 1629388503,"nanoseconds": 722000000},"users": [{"username": "verd"}],
                                     "createdAt": {"seconds": 1629355142,"nanoseconds": 838000000},"id": "werds"});
-  const [interval, setInterval] = useState(3000);
-  const [questions, setQuestions] = useState([]);
-  const [timer, setTimer] = useState({"minutes": 5, "seconds": 0})
+  
+  const [interval, setInterval] = useState(new Date());
+  
+  const [timer, setTimer] = useState({"minutes": 5, "seconds": 0});
 
-  const getQuestionsFunction = async () => {
-    var questions = await getQuestions();
-
-    setTimeout(function(){
-      setQuestions(questions); 
-      console.log("Questions: ", questions);
-    }, 0);
-  };
 
   const getUsersList = async () => {
     var users = await getUsers(roomID)
 
-    setTimeout(function(){
-      setUserList(users); 
-    }, 0);
+    setUserList(users); 
   };
 
   const getRoomDetails = async () => {
@@ -61,11 +53,9 @@ export default function Room(props) {
     const intervalTemp = room.createdAt.seconds*1000+(room.createdAt.nanoseconds*(10**-6));
     
 
-    setTimeout(function(){
-      setRoom(room);
-      setInterval(intervalTemp);
-      console.log('Room', room);
-    }, 0);
+    setRoom(room);
+    setInterval(intervalTemp);
+    console.log('Room', room);
   };
 
   const timeLeft = () => {
@@ -81,58 +71,21 @@ export default function Room(props) {
       return {"minutes": Math.floor(seconds / 60), "seconds": Math.floor(seconds % 60)};
     }
   };
-
-
-  // Function to get random question and allocate answers randomly.  To be moved from this page.
-  // Returns a list containing num_players number of answers, chosen randomly, and 
-  const makeQuestion = () => {
-    var questionList = questions["questions"];
-    var number = Object.keys(questionList).length;
-    var num_players = Object.keys(userList).length;
-    var num_ans = 4;
-
-    var question_no = Object.keys(questionList)[Math.floor(Math.random() * number) + 1];
-    var questionList = questionList[question_no];
-
-    console.log(questionList);
-
-    var answers = {"Correct": questionList["1"]};
-    var questionText = questionList["question"];
-
-    // player_indices is an array that goes: [1, 2, ... num_players]
-    var player_indices = Array.from(new Array(num_players), (x, i) => i + 1);
-    // ans_indices is an array that goes: [2, 3, ... num_ans]
-    var ans_indices = Array.from(new Array(num_ans - 1), (x, i) => i + 2);
-
-    answers[player_indices.splice(Math.random() * num_players, 1)] = questionList["1"];
-
-    for (var i = 0; i < num_players - 1; i++) {
-      var player_index = player_indices.splice(Math.random() * player_indices.length, 1);
-      var ans_index = ans_indices.splice(Math.random() * ans_indices.length, 1);
-
-      answers[player_index.toString()] = questionList[ans_index.toString()];
-    };
-
-    console.log("Answers: ", answers);
-  };
   
   // Function for countdown timer
   // NOTE: Whatever state variables need to be updated constantly (such as userList), move OUTSIDE the flag check block.
   // I just put it inside so that the console doesn't get flooded during development.
   useEffect(() => {
+    getUsersList();
+
     if(!flag){
-      getQuestionsFunction();
       getRoomDetails();
       flag = true;
     }
 
-    getUsersList();
-
     const timer = setTimeout(() => {
       setTimer(timeLeft());
     }, 1000);
-
-    return () => clearTimeout(timer);
   });
   
   return (
