@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -8,11 +8,22 @@ import InfoModal from '../component/Modals/InfoModal';
 import CreateModal from '../component/Modals/CreateModal';
 import JoinModal from '../component/Modals/JoinModal';
 import Credits from '../component/Credits';
+import { deleteRoom } from '../lib/deleteOldDataRoom';
+import { deleteUser } from '../lib/deleteOldDataUser';
 
 export default function Home(props) {
   const [infoModalShow, setInfoModalShow] = React.useState(false);
   const [createModalShow, setCreateModalShow] = React.useState(false);
   const [joinModalShow, setJoinModalShow] = React.useState(false);
+
+  const checkDataDelete = async () => {
+    const deleteRoomData = await deleteRoom();
+    const deleteUserData = await deleteUser();
+  };
+
+  useEffect(() => {
+    checkDataDelete();
+  });
 
   return (
     <div className={styles.container}>

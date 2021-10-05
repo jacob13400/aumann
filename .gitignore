@@ -6,6 +6,7 @@
 .pnp.js
 aumannServiceAccountKeys.json
 encryptDecrypt.js
+deleteOldData*.js
 
 # testing
 /coverage
