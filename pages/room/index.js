@@ -34,6 +34,7 @@ export default function Room(props) {
   const getUsersList = async () => {
     var users = await getUsers(roomID)
 
+    console.log("Users list update: ", users)
     setUserList(users); 
   };
 
@@ -76,16 +77,20 @@ export default function Room(props) {
   // NOTE: Whatever state variables need to be updated constantly (such as userList), move OUTSIDE the flag check block.
   // I just put it inside so that the console doesn't get flooded during development.
   useEffect(() => {
-    getUsersList();
-
+    
     if(!flag){
+      getUsersList();
       getRoomDetails();
       flag = true;
     }
-
-    const timer = setTimeout(() => {
+    
+    const timerSet = setTimeout(() => {
       setTimer(timeLeft());
     }, 1000);
+
+    if (timer.seconds % 5 == 0){
+      getUsersList();
+    }
   });
   
   return (

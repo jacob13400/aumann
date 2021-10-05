@@ -19,7 +19,7 @@ const handleChange = (value, def) => {
 }
 
 // Function to handle locking of the estimate input field
-const handleLock = (estimateValue, setLockModalShow, setLock, setAlertEmptyModalShow, setAlertLimitModalShow) => {
+const handleLock = async (estimateValue, setLockModalShow, setLock, setAlertEmptyModalShow, setAlertLimitModalShow, props) => {
   setLockModalShow(false);
   // If the estimate field was empty
   if (estimateValue == "")
@@ -34,6 +34,10 @@ const handleLock = (estimateValue, setLockModalShow, setLock, setAlertEmptyModal
   else
   {
     setLock(true);
+    const query = {username: props.username, roomID: Number(props.roomID), estimate: estimateValue};
+    console.log("User Updated: ", query);
+    const points = await updateUserEstimate(query);
+
   }
 }
 
@@ -54,7 +58,7 @@ export default function Game(props) {
   const [alertLimitModalShow, setAlertLimitModalShow] = React.useState(false);
 
   // Storing value entered in estimate input field
-  const [estimateValue, setEstimateValue] = React.useState("25");
+  const [estimateValue, setEstimateValue] = React.useState("75");
 
   // Whether estimate input field is accepting input
   const [lock, setLock] = React.useState(false);
@@ -171,7 +175,7 @@ export default function Game(props) {
 
       <LockModal
         show={lockModalShow}
-        onHide={() => handleLock(estimateValue, setLockModalShow, setLock, setAlertEmptyModalShow, setAlertLimitModalShow)}
+        onHide={() => handleLock(estimateValue, setLockModalShow, setLock, setAlertEmptyModalShow, setAlertLimitModalShow, props)}
       />
       <AlertEmptyModal
         show={alertEmptyModalShow}
