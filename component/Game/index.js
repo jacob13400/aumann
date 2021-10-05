@@ -12,9 +12,14 @@ import { updateUserPoints } from '../../lib/userPoints';
 
 
 // Function to handle changing of value in the estimate input field - some values aren't allowed, like characters, etc.
-const handleChange = (value, def) => {
+const handleChange = async (value, def, props) => {
   if (!value || value.match(/^\d{1,}(\.\d{0,4})?$/)) {
     def(value);
+  }
+  if (value > 0 && value < 100){   
+    const query = {username: props.username, roomID: Number(props.roomID), estimate: value};
+    console.log("User Updated on change: ", query);
+    const points = await updateUserEstimate(query);
   }
 }
 
@@ -132,7 +137,7 @@ export default function Game(props) {
             <Form onSubmit={(event) => {event.preventDefault()}}>
               <Form.Group controlId="estimate">
                 <Form.Control className={styles.number} type="text" placeholder="33.33" disabled={lock} value={estimateValue} 
-                  onChange={(e) => {handleChange(e.target.value, setEstimateValue)}}/>
+                  onChange={(e) => {handleChange(e.target.value, setEstimateValue, props)}}/>
               </Form.Group>
             </Form>
           </div>
