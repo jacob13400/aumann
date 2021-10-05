@@ -151,29 +151,25 @@ export default function Game(props) {
         <div className={styles.othersContainer}>
           {
             props.userList.map((player, index) => 
-              // If the player is the user, don't display box for them
-              player.username != props.username ?
-                // If player has locked in their choice, change colour of box border
-                player.lock ?
-                  <div className={styles.otherBoxActive}>
-                    <div className={styles.otherEstimate}>
-                      {player.estimate}%
-                    </div>
-                    <div className={styles.otherName}>
-                      {player.username}
-                    </div>
+              // If player has locked in their choice, change colour of box border
+              player.lock ?
+                <div className={styles.otherBoxActive}>
+                  <div className={styles.otherEstimate}>
+                    {player.estimate}%
                   </div>
-                :
-                  <div className={styles.otherBoxInactive}>
-                    <div className={styles.otherEstimate}>
-                      {player.estimate}%
-                    </div>
-                    <div className={styles.otherName}>
-                      {player.username}
-                    </div>
+                  <div className={styles.otherName}>
+                    {player.username}
                   </div>
+                </div>
               :
-                null
+                <div className={styles.otherBoxInactive}>
+                  <div className={styles.otherEstimate}>
+                    {player.estimate}%
+                  </div>
+                  <div className={styles.otherName}>
+                    {player.username}
+                  </div>
+                </div>
             )
           }
         </div>
