@@ -72,13 +72,13 @@ export default function Game(props) {
   const [flag, setFlag] = React.useState(true);
 
   const updatePoints = async () => {
-    const query = {username: props.username, roomID: props.roomID, estimate: estimateValue, answerBool: answerBool};
+    const query = {username: props.username, roomID: Number(props.roomID), estimate: Number(estimateValue), answerBool: answerBool};
     const points = await updateUserPoints(query);
     console.log("User Updated - at Server: ", points);
   };
 
   // If timer has reached zero, lock the input field
-  if(props.minutes <= 0 && props.seconds == 0 && flag) {
+  if(props.minutes == 0 && props.seconds == 0 && flag) {
     setLock(true);
     setFlag(false);
 
@@ -103,6 +103,7 @@ export default function Game(props) {
             if(player.username == props.username){
               setAnswer(player.answer);
               setAnswerBool(player.answerBool);
+              setEstimateValue(player.estimate)
             }
           })
 

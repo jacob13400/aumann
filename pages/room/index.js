@@ -9,11 +9,11 @@ import Game from '../../component/Game';
 import Chat from '../../component/Chat';
 import RoomFooter from '../../component/RoomFooter';
 import { convertData } from '../../lib/encryptDecrypt';
-import { getQuestions } from '../../lib/questionsGet';
 import { getUsers } from '../api/users';
 import { getRoom } from '../../lib/roomGet';
 
 var flag = false;
+var finalCheck = 5;
 
 
 export default function Room(props) {
@@ -88,7 +88,16 @@ export default function Room(props) {
       setTimer(timeLeft());
     }, 1000);
 
-    if (timer.seconds % 5 == 0){
+    if (timer.seconds % 5 == 0 && timer.minutes > 0){
+      getUsersList();
+    }
+    else if (timer.minutes <= 0 && timer.seconds > 10){
+      getUsersList();
+    }else if (timer.minutes <= 0 && timer.seconds <= 0 && finalCheck > 0){
+      
+      console.log("Final Check: ", finalCheck)
+
+      finalCheck--;
       getUsersList();
     }
   });
