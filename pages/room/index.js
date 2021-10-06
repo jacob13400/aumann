@@ -114,7 +114,6 @@ export default function Room(props) {
         <div className={styles.body}>
           <UserList userList={userList} username={username}/>
           <Game userList={userList} username={username} roomID={roomID} minutes={timer.minutes} seconds={timer.seconds}/>
-          <Chat/>
         </div>
         <div className={styles.padBodyBottom}/>
         <RoomFooter minutes={timer.minutes} seconds={timer.seconds}/>
