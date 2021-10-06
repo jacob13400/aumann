@@ -18,7 +18,7 @@ const handleChange = async (value, def, props) => {
   }
   if (value > 0 && value < 100){   
     const query = {username: props.username, roomID: Number(props.roomID), estimate: value};
-    console.log("User Updated on change: ", query);
+    // console.log("User Updated on change: ", query);
     const points = await updateUserEstimate(query);
   }
 }
@@ -40,7 +40,7 @@ const handleLock = async (estimateValue, setLockModalShow, setLock, setAlertEmpt
   {
     setLock(true);
     const query = {username: props.username, roomID: Number(props.roomID), estimate: estimateValue};
-    console.log("User Updated: ", query);
+    // console.log("User Updated: ", query);
     const points = await updateUserEstimate(query);
 
   }
@@ -74,7 +74,7 @@ export default function Game(props) {
   const updatePoints = async () => {
     const query = {username: props.username, roomID: Number(props.roomID), estimate: Number(estimateValue), answerBool: answerBool};
     const points = await updateUserPoints(query);
-    console.log("User Updated - at Server: ", points);
+    // console.log("User Updated - at Server: ", points);
   };
 
   // If timer has reached zero, lock the input field
@@ -90,7 +90,7 @@ export default function Game(props) {
     const query = {username: props.username, roomID: props.roomID, estimate: estimate};
     const points = await updateUserEstimate(query);
 
-    console.log("User Updated: ", points);
+    // console.log("User Updated: ", points);
   };
 
   useEffect(() => {

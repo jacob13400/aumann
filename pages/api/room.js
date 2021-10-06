@@ -7,7 +7,7 @@ export const getRoom = async (roomID) => {
   
   var result = null;
   snapshot.forEach((doc) => {
-    console.log('Data received: ', doc.data());
+    // console.log('Data received: ', doc.data());
     result = doc.data();
   });
   return result;

@@ -21,7 +21,7 @@ export default function JoinModal(props) {
     localStorage.setItem("username", formState.username);
     localStorage.setItem("roomID", formState.roomID);
 
-    console.log("Sent: ", formState);
+    // console.log("Sent: ", formState);
 
     const userExists = await getUser(formState);
 

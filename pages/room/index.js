@@ -34,7 +34,7 @@ export default function Room(props) {
   const getUsersList = async () => {
     var users = await getUsers(roomID)
 
-    console.log("Users list update: ", users)
+    // console.log("Users list update: ", users)
     setUserList(users); 
   };
 
@@ -50,13 +50,13 @@ export default function Room(props) {
     
     query = {roomID: Number(roomIDCoverted)};
     var room = await getRoom(query)
-    console.log("Data that is needed:", room)
+    // console.log("Data that is needed:", room)
     const intervalTemp = room.createdAt.seconds*1000+(room.createdAt.nanoseconds*(10**-6));
     
 
     setRoom(room);
     setInterval(intervalTemp);
-    console.log('Room', room);
+    // console.log('Room', room);
   };
 
   const timeLeft = () => {
@@ -95,7 +95,7 @@ export default function Room(props) {
       getUsersList();
     }else if (timer.minutes <= 0 && timer.seconds <= 0 && finalCheck > 0){
       
-      console.log("Final Check: ", finalCheck)
+      // console.log("Final Check: ", finalCheck)
 
       finalCheck--;
       getUsersList();

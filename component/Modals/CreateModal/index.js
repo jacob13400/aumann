@@ -18,7 +18,7 @@ export default function CreateModal(props) {
 
   const onEnter = async () => {
     
-    console.log("Sent: ", formState);
+    // console.log("Sent: ", formState);
     
     const roomID = await getRoom(formState);
     var query = {username: formState.username, roomID: roomID};

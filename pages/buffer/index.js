@@ -50,7 +50,7 @@ export default function Buffer(props) {
     var question_no = Object.keys(questionList)[Math.floor(Math.random() * number)];
     questionList = questionList[question_no];
     
-    console.log(questionList);
+    // console.log(questionList);
 
     var answers = {};
     var answersCorrect = {"Correct": questionList["1"]};
@@ -75,13 +75,13 @@ export default function Buffer(props) {
 
     var query = {roomID: roomID, username: username};
     var tempassignQuestion1 = await assignQuestionsRoom(query, answers, answersCorrect);
-    console.log("Answers: ", answers, answersCorrect);
+    // console.log("Answers: ", answers, answersCorrect);
     
     var answersIterate = Object.keys(answers);
     var tempUserList = userList;
     for (var iter = 0; iter < tempUserList.length; iter++){
       query = {roomID: roomID, username: tempUserList[iter].username, index: answersIterate[iter], answer: answers[answersIterate[iter]]};
-      console.log("User Data Update: ", query)
+      // console.log("User Data Update: ", query)
 
       var tempassignQuestion2 = await assignQuestionsUser(query, answersCorrect);
 
@@ -124,7 +124,7 @@ export default function Buffer(props) {
     if (!room.isBuffer)
       Router.push({pathname: "/room", query: {droom2021: props.droom2021, duser2021: props.duser2021}});
 
-    console.log("Update Room on Enter: ", room);
+    // console.log("Update Room on Enter: ", room);
   }
 
   useEffect(() => {
@@ -136,7 +136,7 @@ export default function Buffer(props) {
     setTimeout(function(){
       getUsersList();
       checkBuffer();
-      console.log("User List: ", userList);
+      // console.log("User List: ", userList);
     }, 1000);
   });
 
