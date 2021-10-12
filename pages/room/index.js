@@ -21,7 +21,9 @@ export default function Room(props) {
   const [username, setUsername] = useState(props.duser2021);
 
   const [userList, setUserList] = useState([{ id: 0, username: 'jozdien', roomID: 0, points: 0, estimate: "75", lock: false, 
-                                              color: "#0FFFFF", question: "What is the air-speed velocity of an unladen swallow?"}]);
+                                              color: "#0FFFFF", question: "What is the air-speed velocity of an unladen swallow?"},
+                                              { id: 1, username: 'zeref', roomID: 0, points: 0, estimate: "75", lock: false, 
+                                              color: "#FFFFFF", question: "What is the air-speed velocity of an unladen swallow?"}]);
   
   const [room, setRoom] = useState({"questionID": "0","updatedAt": {"seconds": 1629388503,"nanoseconds": 722000000},"users": [{"username": "verd"}],
                                     "createdAt": {"seconds": 1629355142,"nanoseconds": 838000000},"id": "werds"});
@@ -79,9 +81,15 @@ export default function Room(props) {
   useEffect(() => {
     
     if(!flag){
+      // Progress bar start
+      NProgress.start()
+
       getUsersList();
       getRoomDetails();
       flag = true;
+
+      // Progress bar end
+      NProgress.done()
     }
     
     const timerSet = setTimeout(() => {

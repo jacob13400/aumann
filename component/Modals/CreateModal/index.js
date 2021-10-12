@@ -4,6 +4,8 @@ import Form from 'react-bootstrap/Form';
 import {useRouter} from 'next/router';
 import styles from './styles.module.css';
 
+import NProgress from 'nprogress';
+
 import Button from '../../Button';
 import { getRoom } from '../../../lib/roomCreate';
 import { getUser } from '../../../lib/userCreate';
@@ -20,6 +22,9 @@ export default function CreateModal(props) {
     
     // console.log("Sent: ", formState);
     
+    // Progress bar start
+    NProgress.start()
+
     const roomID = await getRoom(formState);
     var query = {username: formState.username, roomID: roomID};
     const userExists = await getUser(query);
@@ -31,14 +36,19 @@ export default function CreateModal(props) {
     if (userExists){
       console.log('User Exists');
     }else{
+
+      
       var query = {flag: true, message: roomID.toString()};
       var roomIDCoverted = await convertData(query);
-
+      
       var query = {flag: true, message: formState.username};
       var usernameCoverted = await convertData(query);
-
+      
       Router.push({pathname: "/buffer", query:{droom2021: roomIDCoverted, duser2021: usernameCoverted}});
     }
+
+    // Progress bar end
+    NProgress.done()
 
   }
 

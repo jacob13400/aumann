@@ -4,6 +4,7 @@ import {useRouter} from 'next/router';
 import styles from './styles.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import NProgress from 'nprogress';
 import ButtonBuffer from '../../component/ButtonBuffer';
 
 import { getRoom } from '../../lib/roomGet';
@@ -42,6 +43,9 @@ export default function Buffer(props) {
   };
   
   const makeQuestion = async () => {
+    // Progress bar start
+    NProgress.start()
+
     var questionList = questions["questions"];
     var number = Object.keys(questionList).length;
     var num_players = Object.keys(userList).length;
@@ -88,6 +92,9 @@ export default function Buffer(props) {
     }
 
     Router.push({pathname: "/room", query: {droom2021: props.droom2021, duser2021: props.duser2021}});
+    
+    // Progress bar end
+    NProgress.done()
   };
 
 
@@ -97,8 +104,15 @@ export default function Buffer(props) {
     var query = {roomID: Number(roomID)}
     var room = await getRoom(query);
     
-    if (!room.isBuffer)
+    if (!room.isBuffer){
+      // Progress bar start
+      NProgress.start()
+
       Router.push({pathname: "/room", query: {droom2021: props.droom2021, duser2021: props.duser2021}});
+      
+      // Progress bar end
+      NProgress.done()
+    }
   }
 
   const onEnterUpdate = async () => {
@@ -121,8 +135,15 @@ export default function Buffer(props) {
 
     getQuestionsFunction();
 
-    if (!room.isBuffer)
+    if (!room.isBuffer){
+      // Progress bar start
+      NProgress.start()
+      
       Router.push({pathname: "/room", query: {droom2021: props.droom2021, duser2021: props.duser2021}});
+   
+      // Progress bar end
+      NProgress.done()
+    }
 
     // console.log("Update Room on Enter: ", room);
   }

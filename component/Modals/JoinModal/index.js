@@ -3,6 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import {useRouter} from 'next/router';
 import styles from './styles.module.css';
+import NProgress from 'nprogress';
 
 import Button from '../../Button';
 import { addUserRoom } from '../../../lib/roomUserAdd';
@@ -18,6 +19,10 @@ export default function JoinModal(props) {
   const Router = useRouter();
 
   const onEnter = async () => {
+
+    // Progress bar start
+    NProgress.start();
+
     localStorage.setItem("username", formState.username);
     localStorage.setItem("roomID", formState.roomID);
 
@@ -44,6 +49,9 @@ export default function JoinModal(props) {
     else{
       console.log("User Already Exists");
     }
+
+    // Progress bar end
+    NProgress.done()
   }
 
   return (
