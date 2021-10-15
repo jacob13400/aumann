@@ -28,26 +28,20 @@ export default function JoinModal(props) {
 
     // console.log("Sent: ", formState);
 
-    const userExists = await getUser(formState);
+    var roomExists = await addUserRoom(formState);
+    
+    if (roomExists){
+      const userExists = await getUser(formState);
+      var query = {flag: true, message: (formState.roomID).toString()};
+      var roomIDCoverted = await convertData(query);
 
-    if(!userExists){
-      var roomExists = await addUserRoom(formState);
-      
-      if (roomExists){
-        var query = {flag: true, message: (formState.roomID).toString()};
-        var roomIDCoverted = await convertData(query);
+      var query = {flag: true, message: formState.username};
+      var usernameCoverted = await convertData(query);
 
-        var query = {flag: true, message: formState.username};
-        var usernameCoverted = await convertData(query);
-
-        Router.push({pathname: "/buffer", query:{droom2021: roomIDCoverted, duser2021: usernameCoverted}});
-      }
-      else{
-        console.log("Room does not Exists/Game has already started");
-      }
+      Router.push({pathname: "/buffer", query:{droom2021: roomIDCoverted, duser2021: usernameCoverted}});
     }
     else{
-      console.log("User Already Exists");
+      console.log("Room does not Exists/Game has already started");
     }
 
     // Progress bar end
