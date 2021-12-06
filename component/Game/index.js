@@ -46,6 +46,11 @@ const handleLock = async (estimateValue, setLockModalShow, setLock, setAlertEmpt
   }
 }
 
+// Function to handle closing of the lock modal without confirmation
+const handleLockClose = async (setLockModalShow) => {
+  setLockModalShow(false);
+}
+
 var questionFlag = false;
 
 
@@ -177,7 +182,8 @@ export default function Game(props) {
 
       <LockModal
         show={lockModalShow}
-        onHide={() => handleLock(estimateValue, setLockModalShow, setLock, setAlertEmptyModalShow, setAlertLimitModalShow, props)}
+        onConfirm={() => handleLock(estimateValue, setLockModalShow, setLock, setAlertEmptyModalShow, setAlertLimitModalShow, props)}
+        onHide={() => handleLockClose(setLockModalShow)}
       />
       <AlertEmptyModal
         show={alertEmptyModalShow}
