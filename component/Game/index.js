@@ -18,7 +18,7 @@ const handleChange = async (value, def, props) => {
   }
   if (value > 0 && value < 100){   
     const query = {username: props.username, roomID: Number(props.roomID), estimate: value};
-    // console.log("User Updated on change: ", query);
+    console.log("User Updated on change: ", query);
     const points = await updateUserEstimate(query);
   }
 }
@@ -92,7 +92,7 @@ export default function Game(props) {
   }
 
   const updateEstimate = async (estimate) => {
-    const query = {username: props.username, roomID: props.roomID, estimate: estimate};
+    const query = {username: props.username, roomID: Number(props.roomID), estimate: estimate};
     const points = await updateUserEstimate(query);
 
     // console.log("User Updated: ", points);
