@@ -14,6 +14,7 @@ import { getRoom } from '../../lib/roomGet';
 
 var flag = false;
 var finalCheck = 5;
+var counter = 10; // Necessary because the first updates of lockFlag happen after the first checks for some reason
 
 
 export default function Room(props) {
@@ -34,7 +35,7 @@ export default function Room(props) {
 
 
   const getUsersList = async () => {
-    var users = await getUsers(roomID)
+    var users = await getUsers(roomID);
 
     // console.log("Users list update: ", users)
     setUserList(users); 
@@ -79,7 +80,6 @@ export default function Room(props) {
   // NOTE: Whatever state variables need to be updated constantly (such as userList), move OUTSIDE the flag check block.
   // I just put it inside so that the console doesn't get flooded during development.
   useEffect(() => {
-    
     if(!flag){
       // Progress bar start
       NProgress.start()
@@ -93,7 +93,21 @@ export default function Room(props) {
     }
     
     const timerSet = setTimeout(() => {
-      setTimer(timeLeft());
+      var lockFlag = true;
+      for (const user in userList) {
+        if (!userList[user].lock) {
+          lockFlag = false;
+          break;
+        }
+      }
+      if(lockFlag && counter <= 0) {
+        setTimer({"minutes": 0, "seconds": 0});
+        console.log("Test");
+      }
+      else {
+        setTimer(timeLeft());
+        counter--;
+      }
     }, 1000);
 
     if (timer.seconds % 5 == 0 && timer.minutes > 0){
@@ -101,7 +115,8 @@ export default function Room(props) {
     }
     else if (timer.minutes <= 0 && timer.seconds > 10){
       getUsersList();
-    }else if (timer.minutes <= 0 && timer.seconds <= 0 && finalCheck > 0){
+    }
+    else if (timer.minutes <= 0 && timer.seconds <= 0 && finalCheck > 0){
       
       // console.log("Final Check: ", finalCheck)
 
