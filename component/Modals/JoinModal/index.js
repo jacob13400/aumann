@@ -9,12 +9,15 @@ import Button from '../../Button';
 import { addUserRoom } from '../../../lib/roomUserAdd';
 import { getUser } from '../../../lib/userCreate';
 import { convertData } from '../../../lib/encryptDecrypt';
+import AlertMessageModal from '../AlertMessageModal';
 
 export default function JoinModal(props) { 
   const [formState, setFormState] = React.useState({
     roomID: "",
     username: "",
   });
+  const [alertMessageModalShow, setAlertMessageModalShow] = React.useState(false);
+  const [alertMessageDisplay, setAlertMessageDisplay] = React.useState("Default Message");
 
   const Router = useRouter();
 
@@ -42,6 +45,11 @@ export default function JoinModal(props) {
     }
     else{
       console.log("Room does not Exists/Game has already started");
+      // Progress bar end
+      NProgress.done();
+      setAlertMessageDisplay("Room does not Exists/Game has already started")
+      setAlertMessageModalShow(true);
+      return;
     }
 
     // Progress bar end
@@ -49,6 +57,7 @@ export default function JoinModal(props) {
   }
 
   return (
+    <div>
     <Modal
       {...props}
       size="md"
@@ -90,5 +99,12 @@ export default function JoinModal(props) {
         <Button type={"modal"} text={"Enter"} action={onEnter}>Close</Button>
       </Modal.Footer>
     </Modal>
+
+    <AlertMessageModal
+      show={alertMessageModalShow}
+      onHide={() => setAlertMessageModalShow(false)}
+      message={alertMessageDisplay}
+    />
+    </div>
   );
 }
